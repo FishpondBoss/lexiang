@@ -47,8 +47,8 @@ export default {
             var obj={uname:this.uname,upwd:this.upwd};
             this.axios.get(url,{params:obj})
             .then(res=>{
-              // console.log(res.data);
-              if(res.data.code==-4){
+               console.log(res.data);
+              if(res.data.code==-3){
                 this.$toast(res.data.msg);
                 setTimeout(() => {
                   this.$router.push("/myReg");

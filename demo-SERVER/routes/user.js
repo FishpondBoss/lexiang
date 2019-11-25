@@ -27,6 +27,7 @@ router.get('/v1/login',(req,res)=>{
   var $upwd=req.query.upwd;
   var sql='select uid from show_user where uname=? and upwd=?';
   pool.query(sql,[$uname,$upwd],(err,result)=>{
+    console.log(2222);
     if(err) throw err;
     if(result.length==0){
       res.send({code:-3,msg:'该用户尚未注册，请先注册'})
