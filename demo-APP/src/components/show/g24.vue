@@ -44,10 +44,11 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  width: 80%;
 }
 .aa div.bigimg{
-  width: 49%;  
-  margin: 3px 0;
+  width: 49.2%;  
+  margin: 1px 0;
 }
 .aa div.bigimg img{
   width: 100%; 

@@ -20,7 +20,7 @@ import Mylogin from '../components/my/myLogin.vue'
 import Myreg from '../components/my/myReg.vue'
 import MyForupwd from '../components/my/myForupwd.vue'
 import Myyourself from '../components/my/myYourself.vue'
-
+import img from '../components/show/img.vue'
 // import Myceshi from  '../components/my/myCeshi.vue'
 import Myintr from '../components/my/myHeader/Myintr.vue' 
 
@@ -41,6 +41,8 @@ export default new Router({
     // {path:'/show',component:show},
     {path:'/MyForupwd',component:MyForupwd},
     {path:'/Myyourself',component:Myyourself},
-    {path:'/show_pinlun',component:show_pinlun}
+    {path:'/show_pinlun',component:show_pinlun},
+    // 帖子
+    {path:'/img',component:img}
   ]
 })

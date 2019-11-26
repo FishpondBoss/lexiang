@@ -1,20 +1,25 @@
 <template>
-  <div class="video">
+  <div class="img">
     <div class="information">
       <div class="auto">
         <span class="title-img" @click="geren">
           <img :src="auimg">
         </span>
-        <span class="nicname">{{aunick}}</span>
-        <span class="uptime">{{uptime}}</span>
+        <div class="title_info">
+            <span class="nicname">{{aunick}}</span>
+            
+        </div>
       </div>
       <div class="desc"> {{desc}}</div>
     </div>
     <div class="container">
-      <img v-show="a" :src="axios.defaults.baseURL+imgsSrc[0]" class="oneimg" @click="maginf(imgsSrc[0])">
-      <bb v-show="b" :jici="imglen" :imgsSrc="imgsSrc"></bb>
-      <cc v-show="c" :jici="imglen" :imgsSrc="imgsSrc"></cc>
+      <div class="show_img">
+        <img v-show="a" :src="axios.defaults.baseURL+imgsSrc[0]" class="oneimg" @click="maginf(imgsSrc[0])">
+        <bb v-show="b" :jici="imglen" :imgsSrc="imgsSrc"></bb>
+        <cc v-show="c" :jici="imglen" :imgsSrc="imgsSrc"></cc>
+      </div>
     </div>
+    <div><p class="uptime">{{uptime}}</p></div>
     <div class="video_bottom" v-if="z">
      <div class="pinlun">
        <div>
@@ -29,12 +34,10 @@
 </template>
 <script>
 import { ImagePreview } from 'vant';
-import aa from './g1.vue'
 import bb from './g24.vue'
 import cc from './g369.vue'
 export default {
   components:{
-    "aa":aa,
     "bb":bb,
     "cc":cc
   },
@@ -73,17 +76,17 @@ export default {
            ImagePreview(["http://127.0.0.1:5050/"+img]);
      },
     addZ(){
-      var obj={pid:this.pid}
-      this.axios.get("img/addzan",{params:obj})
-      .then(res=>{
-        var result=res.data.length;
-        if(result>0){
-          this.zan="http://127.0.0.1:5050/material/images/v_dzan.png";
-        }
+      // var obj={pid:this.pid}
+      // this.axios.get("img/addzan",{params:obj})
+      // .then(res=>{
+      //   var result=res.data.length;
+      //   if(result>0){
+      //     this.zan="http://127.0.0.1:5050/material/images/v_dzan.png";
+      //   }
         
-      }).catch(err=>{
-        console.log(err)
-      })   
+      // }).catch(err=>{
+      //   console.log(err)
+      // })   
     },
     active(){
       // console.log(this.$store.getters.getZanNum)
@@ -98,24 +101,23 @@ export default {
       }
     },
     findZ(){
-      var obj={pid:this.pid}
-      this.axios.get("img/findzan",{params:obj})
-      .then(res=>{
-        var result=res.data.length;
-        if(result>0){
-          this.zan="http://127.0.0.1:5050/material/images/v_dzan.png";
-        }
+      // var obj={pid:this.pid}
+      // this.axios.get("img/findzan",{params:obj})
+      // .then(res=>{
+      //   var result=res.data.length;
+      //   if(result>0){
+      //     this.zan="http://127.0.0.1:5050/material/images/v_dzan.png";
+      //   }
         
-      }).catch(err=>{
-        console.log(err)
-      })   
+      // }).catch(err=>{
+      //   console.log(err)
+      // })   
     }  
   },
   created() {
     this.findZ()
     console.log(this.imgSrc)
     this.imgsSrc=this.imgSrc.split("|");
-    
     this.imglen=this.imgsSrc.length
     switch(this.imglen){
       case 0:
@@ -150,13 +152,14 @@ export default {
 
 <style scoped>
     .container{
-      width: 100%;
-      position: relative;
-      text-align: center;
+      width: 80%;
+      position:relative;
       padding: 20px 0;
+      margin-left:50px; 
     }
+
     .container .oneimg{
-      width: 100%;
+      width: 75%;
     }
     .container #ctrl{
       position: absolute;
@@ -165,23 +168,26 @@ export default {
       left: 44%;
       display:none;
     }
-    .video{
+    .img{
       width: 100%;
-      padding:10px;  
+      padding-top:10px; 
       margin-bottom: 10px; 
       background: rgb(255, 255, 255); 
     }
+    .information{
+      margin-left:10px; 
+    }
     .information .desc{
-      width: 100%;
-      color: #333;
+      width: 80%;
+      margin-left:50px; 
       font-size: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space:nowrap;
     }
- .title-img{
-   margin-right:6px; 
- }
+    .auto{
+      display:flex; 
+    }
     .title-img img{
       width: 50px;
       height: 50px;
@@ -190,18 +196,17 @@ export default {
     }
     .nicname{
       color: rgb(21, 22, 22);
-      font-size:15px;
+      font-size:17px;
       font-weight: 600;
-      position: relative;
-      top:-30px;
       color: rgb(218, 155, 40)
     }
     .uptime{
       color: rgb(105, 103, 103);
       font-size:14px; 
-      position: relative;
-      left: -100px;
-      top: -7px;
+      margin-left:50px; 
+    }
+    .title_info{
+      padding-left:10px; 
     }
     .video_bottom{
       width: 100%;

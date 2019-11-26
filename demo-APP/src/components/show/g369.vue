@@ -47,13 +47,13 @@ export default {
  width: 32%;   
 }
 .aa div.small:nth-child(2){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small:nth-child(5){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small:nth-child(8){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small img{
   width: 100%;

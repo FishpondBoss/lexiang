@@ -71,22 +71,22 @@ export default {
     }
   },
    methods: {
-     follow(){
-        var obj={uimg:"uimg",nickname:"nickname",selfdom:"selfdom"}
-        console.log(obj)
-        this.axios.get("img/follow",{params:obj})
-        .then(res=>{
-          console.log(res.data)
-          var list=res.data
-          for(var item of list){
-           this.lists.push(item);
-          }
-          console.log(this.lists);
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-      },
+    //  follow(){
+    //     var obj={uimg:"uimg",nickname:"nickname",selfdom:"selfdom"}
+    //     console.log(obj)
+    //     this.axios.get("img/follow",{params:obj})
+    //     .then(res=>{
+    //       console.log(res.data)
+    //       var list=res.data
+    //       for(var item of list){
+    //        this.lists.push(item);
+    //       }
+    //       console.log(this.lists);
+    //     })
+    //     .catch(err=>{
+    //       console.log(err);
+    //     })
+    //   },
       showPopup(){
         this.show = true;
       },
