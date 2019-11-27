@@ -10,118 +10,91 @@
       </van-cell>
     </div>
     <!--  显示关注-->
-   <van-popup v-model="show" position="right" :style="{height:'100%',width:'100%'}" closeable>
-    <div class="swiper-inner">
+   <van-popup v-model="show" position="right" :style="{height:'100%',width:'100%'}" closeable>  
+
+<div class="swiper-inner">
+  <swiper :options="swiperOption" > 
+    <swiper-slide  v-for="(item,i) of lists" :key="i">
       <!-- swiper -->
-      <swiper :options="swiperOption" > 
-        <swiper-slide v-for="(item,i) of lists" :key="i">
-          <div class="swiper_txt">
-            <img :src="axios.defaults.baseURL+item.uimg">
-            <p class="swiper-p1">{{item.nickname}}</p>
-            <p class="swiper-p2">{{item.selfdom}}</p>
-            <div @click="tofan" id="swiper-p3" class="wguanzhu" :data-id="item.uid" v-show="fanshow==1"> ＋关注</div>
-            <div @click="nofan" id="swiper-p3" class="guanzhu" :data-id="item.uid" v-show="fanshow==0">已关注</div>
-          </div>
-        </swiper-slide>
-        <!-- <div class="swiper-pagination" slot="pagination"></div>  小圆点 -->
-      </swiper>
-    </div>
-    <!-- 底部列表 -->
-    <div class="txt-list" v-for="(item,i) of lists"  :key="i"> 
-      <div class="txt-left">
-        <img :src="axios.defaults.baseURL+item.uimg" alt="">
-        <div class="txt-page">
-          <h3 class="txt-h3">{{item.nickname}}</h3>
-          <p class="txt-p">{{item.selfdom}}</p>
-        </div>
-      </div>
-      <div class="txt-right">
-        <!-- <div @click="enter" id="txt-gz" v-bind:class="{'guanzhu':flag,'wguanzhu':!flag}">{{con}}
-        </div> -->
-        <div @click="tofan" id="txt-gz" class="wguanzhu" :data-id="item.uid" v-show="fanshow==1"> ＋关注</div>
-        <div @click="nofan" id="txt-gz" class="guanzhu" :data-id="item.uid" v-show="fanshow==0">已关注</div>
-      </div>
-    </div>
+      <div class="swiper_txt">
+        <mycomment
+        :nickname="item.nickname"
+        :selfdom="item.selfdom"
+        :uimg="axios.defaults.baseURL+item.uimg"
+        :fansid="item.uid"
+        ></mycomment>
+       </div>
+     </swiper-slide>
+  </swiper>
+</div> 
+        
+    <!-- 底部列表 --> 
+      <mytxt v-for="(item,i) of lists"  :key="i"
+      :nickname="item.nickname"
+      :selfdom="item.selfdom"
+      :uimg="axios.defaults.baseURL+item.uimg"
+      :fansid="item.uid"
+      ></mytxt>
   </van-popup>  
 
   </div>
 </template>
 <script>
+import mycomment from './mycomment.vue'
+import mytxt from './mytxt.vue'
+
 export default {
+  components:{
+    "mycomment":mycomment,
+    "mytxt":mytxt,
+  },
   data() {
     return {
-      choose:false,
-       swiperOption: {
-          effect: 'coverflow',//覆盖流
-          grabCursor: true, //获取光标  true
-          centeredSlides: true,//中心幻灯片 true
-          slidesPerView: 'auto',//  自动
-          coverflowEffect: {
-            rotate: 50, //旋转
-            stretch: 0, //拉伸
-            depth: 100, // 深度
-            modifier: 1, //修饰
-            slideShadows : true, 
-          },
+      lists:[],
+      choose:"",
+      show:false,
+      swiperOption: {
+        effect: 'coverflow',//覆盖流
+        grabCursor: true, //获取光标  true
+        centeredSlides: true,//中心幻灯片 true
+        slidesPerView: 'auto',//  自动
+        coverflowEffect: {
+          rotate: 50, //旋转
+          stretch: 0, //拉伸
+          depth: 100, // 深度
+          modifier: 1, //修饰
+          slideShadows : true, 
         },
-        lists:[],
-        show:false,
-        fanshow:1
-
+      },
     }
   },
-   methods: {
-    //  follow(){
-    //     var obj={uimg:"uimg",nickname:"nickname",selfdom:"selfdom"}
-    //     console.log(obj)
-    //     this.axios.get("img/follow",{params:obj})
-    //     .then(res=>{
-    //       console.log(res.data)
-    //       var list=res.data
-    //       for(var item of list){
-    //        this.lists.push(item);
-    //       }
-    //       console.log(this.lists);
-    //     })
-    //     .catch(err=>{
-    //       console.log(err);
-    //     })
-    //   },
+  methods: {
+    follow(){
+        console.log("1111111follw进了")
+        this.axios.get("img/follow")
+        .then(res=>{
+          console.log(res.data)
+          var list=res.data
+          for(var item of list){
+           this.lists.push(item);
+          }
+          console.log(this.lists);
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+      },
+      tobefan(i){
+        this.lists[i].fanshow=1;
+      },
+      nobefan(i){
+        this.lists[i].fanshow=0;
+      },
       showPopup(){
         this.show = true;
       },
-      tofan(event){
-        console.log(event.target.dataset.id)
-        var ID=event.target.dataset.id;
-        var obj={fansid:event.target.dataset.id};
-        var url="msgbox/tofan";
-        this.axios.get(url,{params:obj}).then(res=>{
-          console.log(1111111111)
-            console.log(res.data)
-            if(res.data.code==1){
-              console.log("关注成功")
-              this.uid.fanshow=0;
-            }else{
-              console.log("关注失败")
-            }
-        })
-        .catch(err=>{
-            console.log(err);
-            
-        })
-      },
-      nofan(){
-          var obj={fansid:event.target.dataset.id};
-          var url="msgbox/nofan";
-          this.axios.get(url,{params:obj}).then(res=>{
-              console.log(res)
-          })
-          .catch(err=>{
-              console.log(err);
-          })
-        },
-        chooses(){
-          this.$emit('show',this.choose)
+      chooses(){
+        this.$emit('show',this.choose)
      }
   },
   created() {

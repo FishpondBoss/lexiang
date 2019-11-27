@@ -69,17 +69,22 @@ router.get("/find",(req,res)=>{
 //找zan 
 router.get("/findzan",(req,res)=>{
   var uid=req.session.uid;
-  var uid=3;
+  if(uid==""){
+    res.send({code:-3,msg:"未登录"})
+  }else{
   var pid=req.query.pid
     var sql="select * from show_p_zan where pid=? and uid=?";
     pool.query(sql,[pid,uid],(err,result)=>{
       if(err)throw err;
       res.send(result)
     })
-    
+  }
 })
 // 增加赞
 router.get("/addzan",(req,res)=>{
+  if(uid==""){
+    res.send({code:-3,msg:"未登录"})
+  }else{
   var pfavour=req.query.pfavour;
   var pid=req.query.pid;
   var uid=req.session.uid;
@@ -98,6 +103,7 @@ router.get("/addzan",(req,res)=>{
         }
       });
   }
+}
 }) 
 
 //加载评论
@@ -118,7 +124,9 @@ router.get("/addpinglun",(req,res)=>{
   var cdetails=req.query.cdetails;
   var uptime=req.query.uptime;
   var uid=req.session.uid;
-
+  if(uid==""){
+    res.send({code:-3,msg:"未登录"})
+  }else{
       var sql="INSERT INTO show_p_comment VALUES (NULL,?,?,?,?)";
       pool.query(sql,[uid,pid,cdetails,uptime],(err,result)=>{
         if(err)throw err
@@ -137,50 +145,63 @@ router.get("/addpinglun",(req,res)=>{
         }
        
       });
+ }
 }) 
 
 //关注
 router.get("/follow",(req,res)=>{
- var uid=req.session.uid;
-  // var sql="SELECT * FROM user_like LEFT JOIN  show_user ON user_like.uid=show_user.uid "
-  var sql2="SELECT DISTINCT uid FROM user_like  WHERE like_uid!=1 AND uid!=1";
-  pool.query(sql2,(err,result)=>{
-  //     var sql2="SELECT DISTINCT uid,uimg,selfdom,nickname FROM user_like WHERE like_uid!=1 AND uid!=1";
-      // pool.query(sql2,(err,result)=>{
-        if(err) throw err;
-    // console.log("服务器连接成功....");
-    console.log(result);
-    var ids="";
-    for(var i=0;i<result.length;i++){
-        ids=ids+","+result[i].uid;
-    }
-      ids=ids.slice(1)  //把","切割删除
-    // var uids=result.uid
-    console.log("ids:"+ids);
-    var sql1=`SELECT uid,uimg,nickname,selfdom FROM show_user WHERE uid IN (${ids})`;
+  var arr2= "SELECT DISTINCT like_uid FROM user_like  WHERE  uid=1"; //关注我的人  
+  pool.query(arr2,(err,result)=>{
+    if(err) throw err;
+    // console.log(result);
+  var gz2="";
+  for(var i=0;i<result.length;i++){
+    gz2=gz2+result[i].like_uid+",";
+  }
+  gz2 = gz2.substring(0,gz2.length-1)
+  console.log(gz2,typeof gz2);
+  // 获取我关注的人的uid
+  var arr3 ="SELECT DISTINCT uid FROM user_like WHERE like_uid=1" //我关注的人 
+  pool.query(arr3,(err,result)=>{
+    if(err) throw err;
+    // console.log(result);
+  var gz3="";
+  for(var i=0;i<result.length;i++){
+    gz3=gz3+result[i].uid+",";
+  }
+  gz3 = gz3.substring(0,gz3.length-1)
+  console.log(gz3);
+  gz4 =  gz2 +","+ gz3+",1";
+  // gz4 = gz4.substring(0,gz4.length-1);
+  console.log(gz4)
+
+    var sql1=`SELECT uid,uimg,nickname,selfdom FROM show_user WHERE uid not IN (${gz4})`;
     pool.query(sql1,(err,result)=>{
       if(err)throw err;
       console.log(result)
       res.send(result);
     })
     // res.send({code:1,msg:"查询成功"})
-   
-      })
+  }) 
 })
-
+  
+})
 //关注图文
 router.get("/focus",(req,res)=>{
+  if(uid==""){
+    res.send({code:-3,msg:"未登录"})
+  }else{
  var uid=req.session.uid;
-  // var pno=req.query.pno;
-  // var ps=req.query.pageSize;
-  // var offset=(pno-1)*ps
-  // ps=parseInt(ps)
   var sql="select * from (user_like LEFT JOIN show_picture ON show_picture.uid=user_like.uid) LEFT JOIN show_user ON show_user.uid=show_picture.uid WHERE user_like.like_uid=? ORDER BY uptime DESC";
   pool.query(sql,[uid],(err,result)=>{
     if(err)throw err;
-    // res.send({code:1,msg:"查询成功"})
-    res.send(result);
+    if(result==0){
+      res.send({code:400,msg:"什么也没找到"})
+    }else{
+       res.send(result)
+    }
   })
+}
 })
 
 

@@ -22,8 +22,8 @@ import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper/* { default global options } */)
 import {Uploader} from 'vant';
 Vue.use(Uploader);
-import 'vant/lib/index.css';
 import { Field } from 'vant';
+import 'vant/lib/index.css';
 import { Popup } from 'vant';
 import { Button } from 'vant';
 import { Toast } from 'vant';

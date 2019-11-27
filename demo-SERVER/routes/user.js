@@ -55,7 +55,7 @@ router.post('/v1/reg',(req,res)=>{
     }else{
         var  upwd=req.body.upwd;
       
-        var sql2='insert into show_user set uname=?,upwd=md5(?)';
+        var sql2='insert into show_user set uname=?,upwd=?';
         pool.query(sql2,[uname,upwd],(err,result)=>{
             if(err) throw err;
             if(result.affectedRows>0){

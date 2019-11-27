@@ -39,6 +39,10 @@ export default{
                 if(res.data.code==-1){
                 this.nologin=true;
                 }
+                if(res.data.code==400){
+                // this.nologin=true;
+                console.log("6666")
+                }
         })
         .catch(err=>{
             console.log(err);

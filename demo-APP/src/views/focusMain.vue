@@ -4,17 +4,17 @@
       你的关注
     </div>
       <imgrow
-        v-for="(item,index) in data" 
-        :index="item.uid"
-        :item="item"
-        :key="index"
-        :auimg="axios.defaults.baseURL+item.uimg"
-        :imgSrc="item.psrc"
-        :aunick="item.nickname"
-        :desc="item.pdesc"
-        :pfavour="item.pfavour"
-        :pinlunCount="item.pinlunCount"
-        :z=true
+     v-for="(item,index) in data" 
+     :index="item.uid"
+     :item="item"
+     :key="index"
+     :auimg="axios.defaults.baseURL+item.uimg"
+     :imgSrc="item.psrc"
+     :aunick="item.nickname"
+     :desc="item.pdesc"
+     :pfavour="item.pfavour"
+     :pinlunCount="item.pinlunCount"
+     :z=true
       ></imgrow>
   </div>
 </template>
@@ -45,11 +45,15 @@ export default {
   },
   methods: {
     addVideo(pno){
+
       this.axios.get("img/focus")
       .then(res=>{
-        this.data=res.data;
-        
-        console.log(this.data)
+        // this.data=res.data;
+        if(res.data.code==400){
+        alert("还没有关注")
+        }else{
+          this.data=res.data;
+        }
       }).catch(err=>{
         console.log(err)
       })

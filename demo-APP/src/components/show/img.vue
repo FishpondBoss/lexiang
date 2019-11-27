@@ -62,7 +62,7 @@ export default {
       this.pno++;
      },  
   },
-  
+
   // 初始化页面时加载数据
   created() {
     this.addVideo(1)

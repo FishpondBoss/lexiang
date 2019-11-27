@@ -24,8 +24,7 @@ router.get('/myfans',(req,res)=>{
                 msg:"success",//原因
                 rows:data, //当前页内容
             });
-        }
-        if(result.length>0){
+        }else if(result.length>0){
             console.log(result);
             var like=[];
             var str="";
@@ -155,6 +154,11 @@ router.get('/nofan',(req,res)=>{
                     });
                 }
             })
+        } else{
+            res.send({
+                code:1,   //查询编码
+                msg:"success",
+            })
         }
     })
 })
@@ -168,14 +172,17 @@ router.get('/getcomment',(req,res)=>{
         res.send({code:-1,msg:"请登录"});
         // return;
     }
-    var sql=`select c.pid ,c.cdetails,p.pdesc,u.uimg , u.nickname from show_p_comment c,show_picture p , show_user u where  p.pid=c.pid and  p.pid=${uid} and  u.uid=c.uid`;
+    var sql=`select c.pid ,c.cdetails,p.pdesc,u.uimg , u.nickname from show_p_comment c,show_picture p , show_user u where  p.pid=c.pid and  p.pid=${uid} and  u.uid=c.uid`; 
     pool.query(sql,(err,result)=>{    
         if(err){throw err}
         if(result.length>0){
-            
             res.send({
                 code:1,
                 data:result    
+            })
+        }else{
+            res.send({
+                code:400
             })
         }
     })

@@ -25,6 +25,9 @@
           <div class="mytext">{{item.pdesc}}</div>
           <div class="other">
               <img :src="axios.defaults.baseURL+item.psrc" alt="" class="img1">
+              <div class="bg_1">
+                  <img src="../../../../public/imgs/tianjia.png" alt="">
+              </div>
               <div class="huati"> <img src="../../../../public/imgs/huati.png" alt=""> <span>右有话说</span> <img src="../../../../public/imgs/right.png" alt=""></div>
           </div>
           <div class="bottom1">
@@ -111,6 +114,9 @@ export default {
                             // console.log(arr);
                             item.upTime=arr[0]+"/"+arr[1]+"/"+arr[2];
                 }
+                 for(var i=this.list1.length-1;i>=0;i--){
+                    this.list1[this.list1.length-1-i]=this.list1[i];
+                }
                 }
             }).catch(err=>{
                 console.log(err)
@@ -129,6 +135,14 @@ export default {
                         var arr=item.upTime.match(/\d+/g);
                             // console.log(arr);
                             item.upTime=arr[0]+"/"+arr[1]+"/"+arr[2];
+                               var str=item.psrc;
+                            if(str.indexOf("|")!==-1){
+                                item.psrc=str.split("|")[0];
+                                console.log(item.psrc)
+                            }
+                }
+                 for(var i=this.list.length-1;i>=0;i--){
+                    this.list[this.list.length-1-i]=this.list[i];
                 }
                 // console.log(this.list)
             }).catch(err=>{
@@ -234,6 +248,10 @@ export default {
              background: #fff;
              text-align: center;
          }
+
+         .other{
+             position: relative;
+         }
          .other .img1{
              width:40%;
              height: 10rem;
@@ -259,6 +277,20 @@ export default {
              margin:0 0.3rem;
              font-size: 1rem;
 
+         }
+         .other .bg_1{
+             width:40%;
+             height: 10rem;
+             text-align: center;
+            position: absolute;
+            top:0;
+
+             background:rgba(200,200,200,0.8);
+         }
+          .other .bg_1 img{
+             width:4rem;
+             height: 4rem;
+             margin-top:3rem;
          }
          .bottom1{
              margin:0.8rem 0;
