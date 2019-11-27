@@ -16,13 +16,16 @@
      :pinlunCount="item.pinlunCount"
      :z=true
       ></imgrow>
+    <tabbaricon></tabbaricon>
   </div>
 </template>
 <script>
  import row from '../components/show/img_row.vue'
+ import TabBarIcon from '../components/index/TabBarIcon'
 export default {
   components:{
-    "imgrow":row
+    "imgrow":row,
+    "tabbaricon":TabBarIcon
   },
   data() {
     return {
@@ -48,12 +51,8 @@ export default {
 
       this.axios.get("img/focus")
       .then(res=>{
-        // this.data=res.data;
-        if(res.data.code==400){
-        alert("还没有关注")
-        }else{
-          this.data=res.data;
-        }
+        this.data=res.data;
+        console.log(this.data)
       }).catch(err=>{
         console.log(err)
       })

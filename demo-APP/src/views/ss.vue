@@ -86,7 +86,7 @@
             this.axios.post(this.url2,this.qs.stringify(obj))
             .then(res=>{
                 this.$toast("分享成功！");
-                this.$router.push("/IndexFu")
+                this.$router.push("/showMain")
               })
             .catch(err=>{throw err})
           })
@@ -105,10 +105,10 @@
       black(){
         this.$messagebox.confirm("是否保留本次编辑？")
         .then(res=>{
-          this.$router.push("/IndexFu")
+          this.$router.push("/showMain")
         })
         .catch(err=>{
-          this.$router.push("/IndexFu")
+          this.$router.push("/showMain")
         })
       },
       afterRead(file) {

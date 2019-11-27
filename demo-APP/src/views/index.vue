@@ -18,10 +18,10 @@
   </div>
 </template>
 <script>
-import indexFu from './indexFu.vue';
+// import showMain from '../components/show/showMain.vue'
 export default {
   components:{
-    indexFu
+    // showMain
   },
   data(){
     return{

@@ -57,7 +57,7 @@ export default {
                 console.log(res.data)
                   this.$toast(res.data.msg)
                   setTimeout(()=>{
-                    this.$router.push("/IndexFu");
+                    this.$router.push("/showMain");
                   },1000)
               }
 

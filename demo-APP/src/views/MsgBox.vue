@@ -25,6 +25,7 @@
         <FansList></FansList>
       </mt-tab-container-item>
     </mt-tab-container>
+    <tabbaricon :info="info"></tabbaricon>
   </div>
 </template>
  
@@ -32,17 +33,20 @@
 import InformList from "../components/MsgBox/informList.vue"
 import FansList from "../components/MsgBox/fansList.vue"
 import CorresList from "../components/MsgBox/corresList.vue"
+import TabBarIcon from '../components/index/TabBarIcon'
 export default {
   name: 'page-navbar',
    // 注册子组件
     components:{
         "InformList":InformList,
         "FansList":FansList,
-        "CorresList":CorresList
+        "CorresList":CorresList,
+        "tabbaricon":TabBarIcon
     },
   data() {
     return {
-      selected: '1'
+      selected: '1',
+      info:10
     };
   }
 };

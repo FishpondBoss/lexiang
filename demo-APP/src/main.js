@@ -28,12 +28,13 @@ import { Popup } from 'vant';
 import { Button } from 'vant';
 import { Toast } from 'vant';
 import { Dialog } from 'vant';
-
+import { Tabbar, TabbarItem } from 'vant'; 
 Vue.use(Dialog);
 Vue.use(Toast);
 Vue.use(Button);
 Vue.use(Popup);
 Vue.use(Field);
+Vue.use(Tabbar).use(TabbarItem)
 
 
 Vue.directive('focus', {

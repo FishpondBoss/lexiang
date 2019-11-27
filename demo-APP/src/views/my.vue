@@ -7,12 +7,14 @@
    <div v-else>
      <my-ceshi></my-ceshi>
    </div>
+   <tabbaricon></tabbaricon>
 </div>
 </template>
 <script>
 import myHeader from "../components/my/myHeader.vue"
 import myBody from "../components/my/myBody.vue"
 import myCeshi from "../components/my/myCeshi.vue"
+import TabBarIcon from '../components/index/TabBarIcon'
 export default {
   created(){
     this.getlogin()
@@ -23,7 +25,7 @@ export default {
       }
    },
    components:{
-      myHeader,myBody,myCeshi
+      myHeader,myBody,myCeshi,"tabbaricon":TabBarIcon
    },
    methods:{
      getlogin(){

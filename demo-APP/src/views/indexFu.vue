@@ -57,6 +57,7 @@
         我的
       </mt-tab-item>
     </mt-tabbar>
+    <tabbaricon></tabbaricon>
   </div>
 </template>
 

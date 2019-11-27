@@ -8,17 +8,20 @@
     <video-show v-show="choose"></video-show>
     <!-- 图片 -->
     <img-show v-show="!choose"></img-show>
+       <tabbaricon></tabbaricon>
  </div>   
  </template>
  <script>
  import video from './video.vue'
  import img from './img.vue'
  import main_title from './title'
+  import TabBarIcon from '../index/TabBarIcon'
  export default {
      components:{
       "video-show":video,
       "main-title":main_title,
-      "img-show":img
+      "img-show":img,
+      "tabbaricon":TabBarIcon
      },
     data() {
       return {
