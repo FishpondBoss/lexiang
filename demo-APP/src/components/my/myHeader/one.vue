@@ -5,13 +5,13 @@
              
                <img :src="axios.defaults.baseURL+uimg" alt="" class="img">
              
-              <span class="intr" @click="intr">编辑资料</span>
+              <!-- <span class="intr" @click="intr">编辑资料</span> -->
            </div>
               <div class="details_intr">
-                 <p v-if="nicheng">{{nickname}}</p>
-                 <p v-else>空空如也</p>
+                 <span v-if="nicheng">{{nickname}}</span>
+                 <span v-else>空空如也</span>
+                    <p :class="gender" class="sex"></p>
                 <div>
-                    <p :class="gender"></p>
                 </div>
               </div>
               <div class="dgf">
@@ -75,15 +75,17 @@ export default {
 }
 </script>
 <style scoped>
-.photo{
-  margin-top:2.5rem;
-}
+    .top{
+        text-align: center;
+    }
+    .photo{
+      margin-top:2.5rem;
+    }
     .photo .img{
-        float:left;
         width: 3.4rem;
         height: 3.4rem;
         border-radius: 50%;
-        margin-left:1rem;
+        margin:auto;
     }
     .photo .intr{
       margin-left:13rem;
@@ -95,12 +97,12 @@ export default {
       color:#fff;
      }
      .details_intr{
-       display: flex;
-       margin-top:1rem;
+        /* float:left; */
        color:#fff;
-         margin-left:1rem;
+
      }
      .details_intr div{
+       display: inline-block;
        margin:0.3rem 0 0 0.3rem;
        background: #fff;
        width:0.8rem;
@@ -114,23 +116,27 @@ export default {
        height:0.8rem;
        margin-top:0rem;
      } */
+    
      .gender1{
-       float:left;
+       /* float:left; */
+       display: inline-block;
       width:0.8rem;
        height:0.8rem;
-       margin-top:0rem;
+       /* margin-top:0rem; */
        background:url('../../../../public/imgs/man.png') no-repeat;
        background-size: 0.8rem 0.8rem;
      }
      .gender2{
-       float:left;
+       display: inline-block;
+       /* float:left; */
       width:0.8rem;
        height:0.8rem;
-       margin-top:0rem;
+       /* margin-top:0rem; */
        background:url('../../../../public/imgs/woman.png') no-repeat;
        background-size: 0.8rem 0.8rem;
      }
      .dgf{
+       display: inline-block;
        color:#fff;
        font-size: 0.8rem;
         margin-left:1rem;

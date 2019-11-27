@@ -20,11 +20,11 @@ import Chat from "../components/MsgBox/chat.vue"
 /*我的*/
 import Myset from '../components/my/mySet.vue'
 import Mylogin from '../components/my/myLogin.vue'
-import Mylogin1 from '../components/my/myLogin1.vue'
+// import Mylogin1 from '../components/my/myLogin1.vue'
 import Myreg from '../components/my/myReg.vue'
 import MyForupwd from '../components/my/myForupwd.vue'
 import Myyourself from '../components/my/myYourself.vue'
-
+// import Myforupwd1 from '../components/my/myForupwd1.vue'
 // import Myceshi from  '../components/my/myCeshi.vue'
 import Myintr from '../components/my/myHeader/Myintr.vue' 
 
@@ -42,13 +42,15 @@ export default new Router({
     {path:'/ss',component:ss},
     {path:'/Myset',component:Myset},
     {path:'/Mylogin',component:Mylogin},
-    {path:'/Mylogin1',component:Mylogin1},
+
     {path:'/Myreg',component:Myreg},
     // {path:'/Myceshi',component:Myceshi},
     {path:'/Myintr',component:Myintr},
     // {path:'/show',component:show},
     {path:'/MyForupwd',component:MyForupwd},
     {path:'/Myyourself',component:Myyourself},
-    {path:'/show_pinlun',component:show_pinlun}
+    {path:'/show_pinlun',component:show_pinlun},
+
+
   ]
 })

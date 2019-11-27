@@ -27,8 +27,9 @@ export default {
 <style scoped>
     .top{
       width:100%;
-      height: 14rem;
-      background: #38BAF8;
+      height: 18rem;
+      background:url('../../../public/imgs/icon/8.jpg') no-repeat;
+      background-size:100% 100%;
       position:relative;
     }
     .top::before{
@@ -37,19 +38,18 @@ export default {
     }
   .top_set{
     position: absolute;
-    background: #eef;
     right:1rem;
     top:1.3rem;
-    width:1.3rem;
-    height: 1.3rem;
+    width:1.5rem;
+    height: 1.5rem;
     border-radius: 0.2rem;
   }
   .top_set img{
-    width:1.3rem;
-    height: 1.3rem;
+    width:1.5rem;
+    height: 1.5rem;
   }
   .top_lr{ 
-     margin:6.5rem auto 0;
+     margin:8.5rem auto 0;
     line-height: 2rem;
     text-align: center;
     font-size:1rem;
@@ -58,6 +58,7 @@ export default {
     background: #fff;
     border-radius: 0.8rem;
     color: #38BAff;
+    border:0;
   }
 </style>
 

@@ -44,8 +44,9 @@ export default {
 }
   .top_success{
       width:100%;
-      height:16rem;
-      background: #38BAF8;
+      height: 18rem;
+      background:url('../../../public/imgs/icon/8.jpg') no-repeat;
+      background-size:100% 100%;
    
     }
     .top_success::before{
@@ -54,17 +55,17 @@ export default {
     }
   .top_set{
     float:right;
-    background: #eef;
+
     right:1rem;
     top:0.5rem;
     margin:1.3rem 1rem 0 0;
-    width:1.3rem;
-    height: 1.3rem;
+    width:1.5rem;
+    height: 1.5rem;
     border-radius: 0.2rem;
   }
   .top_set img{
-    width:1.3rem;
-    height: 1.3rem;
+    width:1.5rem;
+    height: 1.5rem;
   }
   .content .content_top{
     margin:2rem 0 0 1rem;

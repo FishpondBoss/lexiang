@@ -1,44 +1,86 @@
 <template>
-  <div class="user_login">
-        <h1>爱分享&nbsp;&nbsp;&nbsp;&nbsp;爱生活</h1>
-     <div class="userLogin">
-        <h2 class="user">用户注册</h2>
-        <mt-field label="手机号" type="text" placeholder="请输入您的11位手机号" v-model="uname"></mt-field>
-        <mt-field placeholder="图文验证码" v-model="pupwd" type="text"></mt-field>
-        <div class="code" @click="refreshCode"><s-identify :identifyCode="identifyCode"></s-identify> </div>
-        
-        <mt-field label="密码" type="password" placeholder="密码长度在3~16位" v-model="upwd"></mt-field>
-        <mt-field label="密码" type="password" placeholder="请再次输入您的密码" v-model="upwd1"></mt-field>
-        <mt-button size="large" class="reg" @click="reg"> 注册</mt-button>
-       </div>
+  <div>
+    <div class="top">
+      <div class="cha" @click="tui">
+        <img src="../../../public/imgs/cha.png" alt=""  >
+        </div>
+    </div>
+    <div class="center">
+        <div class="up">
+           <span>
+              用户注册
+           </span>
+        </div>
+        <div class="body">
+             <van-cell-group >
+              <van-field
+                v-model="uname"
+                required
+                clearable
+                label="用户名"
+                right-icon="question-o"
+                placeholder="请输入用户名"
+                @click-right-icon="$toast('用户名为您的11位手机号')"         
+              />
+
+              <van-field
+                v-model="pupwd"
+                type="text"
+                label="验证码"
+                placeholder="请输入您的验证码"
+                required              
+              />
+               <div class="code" @click="refreshCode"><s-identify :identifyCode="identifyCode"></s-identify> </div>
+              <van-field
+                v-model="upwd"
+                type="password"
+                label="密码"
+                placeholder="请输入您的密码"
+                required
+                right-icon="question-o"
+                 @click-right-icon="$toast('密码长度为3-16位')"           
+              />
+              <van-field
+                v-model="upwd1"
+                type="password"
+                label="确认密码"
+                placeholder="请再次输入您的密码"
+                required
+                right-icon="question-o"
+                 @click-right-icon="$toast('密码长度为3-16位')" 
+              />
+          </van-cell-group>
+        </div>
+        <div class="bottom">
+            <button @click="reg">立即注册</button>
+        </div>
+    </div>
   </div>
 </template>
 <script>
 import SIdentify from '../identify.vue'
 export default {
-  name: "codetest",
+    name: "codetest",
    components: {SIdentify},
-    data(){
-      return{
-        identifyCodes: "1234567890",
-      identifyCode: "",
+  data(){
+    return{
+       identifyCodes: "1234567890",
+        identifyCode: "",
         uname:'',
-        pupwd:'',
         upwd:'',
         upwd1:'',
-        list:[
-          {label:"男",value:'1'},
-          {label:"女",value:'0'}
-        ],
-        val:''
-      }
-    },
-    methods:{
-      mounted() {
-        this.identifyCode = "";
-        this.makeCode(this.identifyCodes, 4);
-      },
-      reg(){
+        pupwd:'',
+        disabled:true
+    }
+  },
+  methods:{
+      tui(){
+          var t= setTimeout(()=>{
+               this.$router.go(-1)
+                clearTimeout(t)
+           },1000)
+       },
+        reg(){
         if(!/^1[3-9]\d{9}$/.test(this.uname)){
           this.$messagebox("消息","手机号格式不正确")
           return;
@@ -74,69 +116,78 @@ export default {
           }).catch(err=>{throw err})
         }
       },
-      randomNum(min, max) {
-      return Math.floor(Math.random() * (max - min) + min);
-    },
-    refreshCode() {
-      this.identifyCode = "";
-      this.makeCode(this.identifyCodes, 4);
-    },
-    makeCode(o, l) {
-      for (let i = 0; i < l; i++) {
-        this.identifyCode += this.identifyCodes[
-          this.randomNum(0, this.identifyCodes.length)
-        ];
-      }
-      console.log(this.identifyCode);
-    }
-  }
-    
+        mounted() {
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+      },
+        randomNum(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+        },
+        refreshCode() {
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+        },
+        makeCode(o, l) {
+        for (let i = 0; i < l; i++) {
+            this.identifyCode += this.identifyCodes[
+            this.randomNum(0, this.identifyCodes.length)
+            ];
+        }
+        console.log(this.identifyCode);
+        }
 
+  }
 }
 </script>
 <style scoped>
-  .user_login{
-    position:fixed;
+  .top{
+    background:url('../../../public/imgs/icon/7.jpg') no-repeat;
+    background-size: 100% 100%;
     width: 100%;
-    height: 100%;
-    background: #35B9F8; 
+    height: 18rem;
+    position: relative;
+  }  
+  .top .cha img{
+        width:1.3rem;
+        height: 1.3rem;
+        position: absolute;
+        top:1.5rem;
+        z-index: 1;
+        left:1rem;
+    }
+  .center{
+    margin-top:1rem;
+    padding:0 2rem;
   }
-  .user_login>h1{
-    color:#fff;
-    text-align: center;
-    margin-top:10%;
-  }
-  .userLogin{
-    padding:0 1rem;
-    margin-top:20%;
+   .center .up{
+      font-size: 2rem;
+      font-family: "simhei";
+    }
+  .body{
     position:relative;
-    height: 30rem;
-    background: #fff;
-    border-radius:0.3rem;
-    
   }
-  .userLogin::before{
-    display: table;
-    content:''
-  }
-  .user{
-    text-align:center;
-    margin-bottom:5rem;
-    margin-top:2rem;
-      color:#35B9F8;
-  }
-  .reg{
-   background:#35B9F8;
-   margin-top:5rem;
-   color:#fff;
-  }
-  .code {
-    position:absolute;
-   top:12.1rem;
-   right:1rem;
-  width: 114px;
-  height: 40px;
-  border: 1px solid red;
-}
+  .code{
+        position:absolute;
+        top:3rem;
+        right:0rem;
+        width: 114px;
+        height: 41px;
 
+    }
+     .van-field{
+    border-bottom:0.05rem solid #aaa;
+  }
+    .center .bottom{
+      text-align: center;
+    }
+      .center .bottom button{
+         outline:0;
+         border: 0;
+         font-size: 1.6rem;
+         color:#fff;
+         background: #38BAF8;
+         padding:0.3rem 4rem;
+         margin-top:2rem;
+         border-radius: 2rem;
+      }
 </style>

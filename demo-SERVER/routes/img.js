@@ -25,16 +25,29 @@ router.post("/upload_pic",(req,res)=>{
 router.post("/upload",(req,res)=>{
   var obj=req.body;
   console.log(obj)
-  var sql='INSERT INTO show_picture set uid=?,pdesc=?,psrc=?,upTime=?';
-  pool.query(sql,[obj.uid,obj.msg,obj.content,obj.time],(err,result)=>{
-    //console.log(result)
-    if(err) throw err;
-    if(result.affectedRows>0){
-      res.send({code:2,msg:'注册成功'})
-    }else{
-      res.send({code:-3,msg:'注册失败，请重试'})
-    }
-  })
+  var sql1='INSERT INTO show_picture set uid=?,pdesc=?,psrc=?,upTime=?';
+  var sql2='INSERT INTO show_picture set uid=?,pdesc=?,upTime=?';
+  if(obj.content!==""){
+    pool.query(sql1,[obj.uid,obj.msg,obj.content,obj.time],(err,result)=>{
+      //console.log(result)
+      if(err) throw err;
+      if(result.affectedRows>0){
+        res.send({code:2,msg:'注册成功'})
+      }else{
+        res.send({code:-3,msg:'注册失败，请重试'})
+      }
+    })
+  }else{
+    pool.query(sql2,[obj.uid,obj.msg,obj.time],(err,result)=>{
+      //console.log(result)
+      if(err) throw err;
+      if(result.affectedRows>0){
+        res.send({code:2,msg:'注册成功'})
+      }else{
+        res.send({code:-3,msg:'注册失败，请重试'})
+      }
+    })
+  }
 })
 
 //验证登录

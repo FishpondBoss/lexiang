@@ -55,7 +55,21 @@
       },
       c(){
         if(this.content.length<1){
-          return;
+         var d = new Date();
+          var resDate = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate());
+          var resTime = this.p(d.getHours()) + ':' + this.p(d.getMinutes()) + ':' + this.p(d.getSeconds());
+          this.time = resDate+" "+resTime;
+          var $message=document.getElementById("message");
+          this.msg=$message.value;
+          this.str="";
+          var obj={uid:this.uid,time:this.time,msg:this.msg,content:this.str};
+          console.log(obj);
+          this.axios.post(this.url2,this.qs.stringify(obj))
+          .then(res=>{
+              this.$toast("分享成功！");
+              this.$router.push("/showMain")
+            })
+          .catch(err=>{throw err})
         }else{
           var rows=[];
           for(var i=0;i<this.content.length;i++){
