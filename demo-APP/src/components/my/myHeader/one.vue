@@ -5,20 +5,24 @@
              
                <img :src="axios.defaults.baseURL+uimg" alt="" class="img">
              
-              <!-- <span class="intr" @click="intr">编辑资料</span> -->
            </div>
               <div class="details_intr">
                  <span v-if="nicheng">{{nickname}}</span>
                  <span v-else>空空如也</span>
-                    <p :class="gender" class="sex"></p>
                 <div>
+                    <p :class="gender" class="sex"></p>
                 </div>
               </div>
               <div class="dgf">
-              <p>{{selfdom}}</p>
-                  <span>2.0w获赞</span>
-                  <span>8关注</span>
-                  <span>16粉丝</span>
+                <div class="qianming">
+                  <span>{{selfdom}}</span>
+                  <img class="intr" @click="intr" src="../../../../public/imgs/icon/revise.png">
+                </div>
+                  <div class="huozan">
+                    <span>2.0w获赞</span>
+                    <span>8关注</span>
+                    <span>16粉丝</span>
+                  </div>  
                 </div>
               </div>      
   </div>
@@ -82,32 +86,47 @@ export default {
       margin-top:2.5rem;
     }
     .photo .img{
-        width: 3.4rem;
-        height: 3.4rem;
+        width: 4rem;
+        height: 4rem;
         border-radius: 50%;
         margin:auto;
     }
-    .photo .intr{
-      margin-left:13rem;
-      background: rgba(200,200,200,0.6);
-      border-radius: 1.5rem;
-      padding:0.18rem 1rem;
-      line-height: 3.4rem;
-      font-size: 0.9rem;
-      color:#fff;
+      .qianming{
+        margin:0.5rem 0;
+      }
+    .qianming span{
+      font-size: 1rem;
+    }
+   .intr{
+      /* margin-left:13rem; */
+      background:#fff;
+      width: 0.8rem;
+      height: 0.8rem;
+      /* border-radius: 1.5rem; */
+      /* padding:0.18rem 1rem; */
+      /* line-height: 3.4rem; */
+      /* font-size: 0.9rem; */
+      /* color:#fff; */
      }
+      
      .details_intr{
         /* float:left; */
        color:#fff;
+       margin-top:0.6rem;
+       margin-left:1rem;
 
+     }
+     .details_intr::before{
+         display: table;
+         content: "";
      }
      .details_intr div{
        display: inline-block;
-       margin:0.3rem 0 0 0.3rem;
+       /* margin:-0.3rem 0 0 0rem;
        background: #fff;
        width:0.8rem;
        height:0.8rem;
-       border-radius: 50%;
+       border-radius: 50%; */
 
      }
      /* .details_intr div img{
@@ -120,20 +139,21 @@ export default {
      .gender1{
        /* float:left; */
        display: inline-block;
-      width:0.8rem;
-       height:0.8rem;
+      width:1rem;
+      /* margin-left:-1rem; */
+       height:1rem;
        /* margin-top:0rem; */
        background:url('../../../../public/imgs/man.png') no-repeat;
-       background-size: 0.8rem 0.8rem;
+       background-size:1rem 1rem;
      }
      .gender2{
        display: inline-block;
        /* float:left; */
-      width:0.8rem;
-       height:0.8rem;
+      width:1rem;
+       height:1rem;
        /* margin-top:0rem; */
        background:url('../../../../public/imgs/woman.png') no-repeat;
-       background-size: 0.8rem 0.8rem;
+       background-size: 1rem 1rem;
      }
      .dgf{
        display: inline-block;
@@ -147,5 +167,11 @@ export default {
      }
      .dgf span{
        font-size: 0.6rem;
-     }  
+     } 
+     .huozan{
+       margin-top:0.9rem;
+     } 
+      .huozan span:nth-child(2){
+            margin:0 1rem;
+     } 
      </style>

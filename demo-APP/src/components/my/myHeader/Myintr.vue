@@ -10,7 +10,7 @@
       </div>
       <div class="body">
             <mt-field label="昵称" type="text" v-model="nickname" placeholder="请输入你的昵称"></mt-field>
-            <mt-field label="个人简介" type="textarea" placeholder="向大家展示一下自己呗" v-model="selfdom" rows="4"></mt-field>
+            <mt-field label="个人简介:" type="textarea" placeholder="向大家展示一下自己呗" v-model="selfdom" rows="3"></mt-field>
             <div class="sex">
                <div class="sex1">性别</div>
             <mt-radio  :options="list" v-model="sexval"></mt-radio>
@@ -33,7 +33,10 @@
                 </mt-datetime-picker>
               </div>
            </div>
-            <mt-button size="large"     @click="intr" class="m-button">修改</mt-button>
+           <div class="bottom-b">
+
+            <button     @click="intr" class="m-button">修改</button>
+           </div>
       </div>
   </div>
 </template>
@@ -139,10 +142,20 @@ export default {
        left:0.8rem;
 
     }
+    .top{
+      background:url('../../../../public/imgs/icon/8.jpg') no-repeat;
+      width: 100%;
+      height: 14rem;
+    }
+    .top::before{
+      display: table;
+      content:''
+    }
     .top .text{
       text-align: center;
       margin-top:1.5rem;
       font-size:1.2rem;
+      color:#fff;
     }
     .top .photo{
       margin:2rem auto;
@@ -182,6 +195,7 @@ export default {
     }
     .container{
       padding:0 0.5rem;
+      /* border-bottom:0.01rem solid #D9D9D9; */
     }
     .birth{
       border-spacing: border-box;
@@ -190,11 +204,19 @@ export default {
       height: 3rem;
      align-items: center;
      border-top:0.01px solid #D9D9D9;
-     border-bottom:0.01px solid #D9D9D9;
+     border-bottom:0.4rem solid #D9D9D9;
+    }
+    .bottom-b{
+      text-align: center;
     }
     .m-button{
+      outline: 0;
+      border:0;
       background: #38BAF8;
+      padding:1rem 5rem;
       color:#fff;
+      margin-top:2rem; 
+      border-radius: 5rem;
     }
 </style>
 

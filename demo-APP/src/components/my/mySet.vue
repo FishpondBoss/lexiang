@@ -5,8 +5,8 @@
         <div class="container">
                 <div class="container_item" v-for="(item,i) of list" :key="i" @click="sorry">{{item}}</div>
         </div>
-        <div class="end" @click="exit">
-                退出当前账号
+        <div class="end">
+              <button  @click="exit"> 退出当前账号</button> 
         </div>
     </div>
 </template>
@@ -69,11 +69,12 @@ export default {
         text-align: center;
         color:#000;
         margin-top:-1.3rem;
-       font-size:1.2rem;
+       font-size:1.3rem;
+
     }
     .container{
         /* border-top:0.5rem solid #ccc; */
-        margin-top:2rem;
+        margin-top:1.5rem;
     }
     .container_item{
         height: 3rem;
@@ -83,19 +84,25 @@ export default {
         border-top:0.01rem solid #ccc;
       
     }
-    .container div:nth-child(1),.container div:nth-child(3),.container div:nth-child(4),.container div:nth-child(5),.container div:nth-child(7){
-         border-top:0.5rem solid #ccc;
+    .container div:nth-child(1),.container div:nth-child(3),.container div:nth-child(5),.container div:nth-child(7){
+         border-top:0.3rem solid #ccc;
     }
-    
+    .container div:last-child{
+        border-bottom:0.3rem solid #ccc;
+    }
     .end{
-        border-top:0.5rem solid #ccc;
-        border-bottom:0.5rem solid #ccc;
-        height: 3rem;
-        line-height: 3rem;
-        font-size: 1rem;
         text-align: center;
-        color:#1ff;
-        margin:1rem 0 0.2rem 0.3rem;
+        margin-top:2.5rem;
+    }
+    .end button{
+        outline:0;
+        border:0;
+        background: #37BAF7;
+        color:#fff;
+        padding:0.8rem 3rem;
+        font-size: 1.2rem;
+        border-radius: 5rem;
+        
        
     }
 </style>

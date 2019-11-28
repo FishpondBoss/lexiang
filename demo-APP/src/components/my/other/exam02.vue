@@ -21,31 +21,24 @@
                         <span>{{item.upTime}}</span>
                     </div>
             </div>
+             <div class="hot" v-show="item.pfavour>=3"> <img src="../../../../public/imgs/icon/hot.png" alt=""> </div>
           </div>
           <div class="mytext">{{item.pdesc}}</div>
           <div class="other">
               <img :src="axios.defaults.baseURL+item.psrc" alt="" class="img1">
-              <div class="bg_1">
+              <div class="bg_1" v-show="item.psrc==''? false : true">
                   <img src="../../../../public/imgs/tianjia.png" alt="">
               </div>
-              <div class="huati"> <img src="../../../../public/imgs/huati.png" alt=""> <span>右有话说</span> <img src="../../../../public/imgs/right.png" alt=""></div>
+             
           </div>
-          <div class="bottom1">
-              <div class="left">
-                  <img src="../../../../public/imgs/fenxiang.png" alt="">
-                  <span>分享</span>
-              </div>
-              <div class="center">
-                  <img src="../../../../public/imgs/comment.png" alt="">
-                  <span>评论</span>
-              </div>
-              <div class="right">
-                  <img src="../../../../public/imgs/up.png" alt="">
-                  <span>{{item.pfavour}}</span>
-                  <img src="../../../../public/imgs/down.png" alt="">
-              </div>
+          <div class="bottom1">          
+                  <img src="../../../../public/imgs/icon/2.jpg" alt="">          
+                  <img src="../../../../public/imgs/icon/3.jpg" alt="">         
+                  <img src="../../../../public/imgs/icon/1.jpg" alt="">         
+                  <!-- <span>{{item.pfavour}}</span> -->
          </div>   
       </div>
+            <div class="bottom">不要往下看啦~，想看也没有了哦</div>
   </mt-tab-container-item>
   <mt-tab-container-item id="2">
  <div class="top">
@@ -61,10 +54,8 @@
                                             <span>{{item.upTime}}</span>
                                         </div>
                             </div>
-                            <div class="dianzan">
-                            <span>↑</span>&nbsp;
-                            <span>{{item.pfavour}}</span>&nbsp;
-                            <span>↓</span>
+                            <div class="dianzan" v-show="item.pfavour>=3">
+                           <img src="../../../../public/imgs/icon/hot.png" alt="">                        
                             </div>
                     </div>
                     <div class="mytext">{{item.cdetails}}</div>
@@ -106,15 +97,23 @@ export default {
             this.axios.get(url,{params:obj}).then(res=>{
                 console.log("hahahah")
                 // console.log(res)
-                if(res.data.code==200){
+                 if(res.data.code==200){
                 var data=res.data.msg;
                 this.list1=data;
+                console.log(1)
+                console.log(this.list1)
                   for( var item of this.list1){
                         var arr=item.upTime.match(/\d+/g);
                             // console.log(arr);
                             item.upTime=arr[0]+"/"+arr[1]+"/"+arr[2];
+                                var str=item.psrc
+                            if(str.indexOf("|")!==-1){
+                                item.psrc=str.split("|")[0];
+                                console.log(str.split("|"))
+                                console.log(item.psrc)
+                            }
                 }
-                 for(var i=this.list1.length-1;i>=0;i--){
+                for(var i=this.list1.length-1;i>=0;i--){
                     this.list1[this.list1.length-1-i]=this.list1[i];
                 }
                 }
@@ -128,6 +127,7 @@ export default {
              console.log("这里的uid:"+this.uid)
             this.axios.get(url,{params:obj}).then(res=>{
                 // console.log(res.data)
+                // console.log(res.data)
                 this.list=res.data.msg;
                     // console.log(this.list)
                     
@@ -135,16 +135,10 @@ export default {
                         var arr=item.upTime.match(/\d+/g);
                             // console.log(arr);
                             item.upTime=arr[0]+"/"+arr[1]+"/"+arr[2];
-                               var str=item.psrc;
-                            if(str.indexOf("|")!==-1){
-                                item.psrc=str.split("|")[0];
-                                console.log(item.psrc)
-                            }
                 }
                  for(var i=this.list.length-1;i>=0;i--){
                     this.list[this.list.length-1-i]=this.list[i];
                 }
-                // console.log(this.list)
             }).catch(err=>{
                 console.log(err)
             })
@@ -164,6 +158,14 @@ export default {
 }
 </script>
 <style scoped>
+ .hot{
+           margin-top:0.4rem;
+           margin-right:0.5rem;
+       }
+       .hot img{
+           width: 1.5rem;
+           height: 1.5rem;
+       }
        .navbar .item span{
            font-size: 1rem;
        }
@@ -184,9 +186,11 @@ export default {
            line-height: 2.2rem;
             font-size:1rem;
            padding:0 0.5rem 0 0.5rem;
-           color:#888; 
+           /* color:#888;  */
        }
-      
+        .content{
+            padding:0 0.5rem;
+        }
        .content .body .img{
            width: 2.8rem;
            height: 2.8rem;
@@ -210,31 +214,24 @@ export default {
              justify-content: space-between;
              padding:0.5rem 0.5rem 0 0.5rem;
          }
-        .dianzan>span{
-             height: 2.8rem;
-             line-height: 2.8rem;
-             font-size: 1rem;
+       .dianzan img{
+             width: 1.5rem;
+             margin-top:0.2rem;
          }
-         .dianzan span:nth-child(1){
-             color:#f00;
-         }
-       
-         .dianzan span:nth-child(3){
-             color:#0ef;
-         }
+      
          .mytext{
              margin:1rem 0 0 0.5rem;
          }
          .text{
-             background: #eee;
-             width: 95%;
-             line-height: 3rem;
-             font-size: 1rem;
-             margin:1rem auto;
-             padding-left:0.5rem;
-             border-radius: 0.5rem;
+              background: #eee;
+             width: 80%;
+             line-height: 2rem;
+             font-size: 0.8rem;
+             margin:1rem 0.8rem;
+             padding-left:0.9rem;
+             border-radius: 1.5rem;
              white-space: nowrap;
-             height: 3rem;
+             height: 2rem;
              text-overflow: ellipsis;
              overflow: hidden;
              margin-bottom:1rem;
@@ -292,18 +289,18 @@ export default {
              height: 4rem;
              margin-top:3rem;
          }
-         .bottom1{
-             margin:0.8rem 0;
+        .bottom1{
+             margin:0.7rem 0;
+             display: flex;
          }
-        .bottom1 .left img,.bottom1 .center img,.bottom1 .right img{
-            width: 1.1rem;
+        .bottom1 img{
+            width: 1rem;
+            height: 1rem;
         }
-        .bottom1 .left,.bottom1 .center,.bottom1 .right,.bottom1{
-            display: flex;
-            justify-content: space-around;
-
+        .bottom1 img:nth-child(1){
+            margin-left:0.2rem;
         }
-        .bottom1 .right span,.bottom1 .center span,.bottom1 .left span{
-            margin:0 0.8rem;
+        .bottom1 img:nth-child(2){
+            margin:0 1rem;
         }
 </style>

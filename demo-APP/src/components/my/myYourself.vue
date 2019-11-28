@@ -61,7 +61,7 @@ export default {
   .top_success{
       width:100%;
       height:16rem;
-      background: #38BAF8;
+      background:url("../../../public/imgs/icon/8.jpg")
    
     }
     .top_success::before{
@@ -70,7 +70,7 @@ export default {
     }
   .top_set{
     float:right;
-    background: #eef;
+    /* background: #eef; */
     right:1rem;
     top:0.5rem;
     margin:1.3rem 1rem 0 0;
@@ -86,7 +86,7 @@ export default {
     margin:2rem 0 0 1rem;
     text-align: center;
     color:#fff;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   .content .content_top span{
     margin-left:1rem;

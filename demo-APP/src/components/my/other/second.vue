@@ -94,7 +94,7 @@ export default {
         margin-left:1rem;
     }
     .photo .intr{
-      margin-left:2rem;
+      margin-right:0rem;
       background: rgba(200,200,200,0.6);
       border-radius: 1.5rem;
       padding:0.18rem 1rem;
@@ -124,19 +124,21 @@ export default {
      } */
      .gender1{
        float:left;
-      width:0.8rem;
-       height:0.8rem;
-       margin-top:0rem;
+      width:1rem;
+       height:1rem;
+       /* margin-top:-0.1rem; */
+       margin:-0.07rem 0 0 -1.4px;
        background:url('../../../../public/imgs/man.png') no-repeat;
-       background-size: 0.8rem 0.8rem;
+       background-size: 100% 100%;
      }
      .gender2{
-       float:left;
-      width:0.8rem;
-       height:0.8rem;
-       margin-top:0rem;
+        float:left;
+      width:1rem;
+       height:1rem;
+       /* margin-top:-0.1rem; */
+       margin:-0.07rem 0 0 -1.4px;
        background:url('../../../../public/imgs/woman.png') no-repeat;
-       background-size: 0.8rem 0.8rem;
+       background-size: 100% 100%;
      }
      .dgf{
        color:#fff;
@@ -153,7 +155,8 @@ export default {
      .sixin{
        color:#fff;
        background: rgba(200,200,200,0.6);
-       margin-left:10rem;
+       margin-left:8rem;
+       margin-right:2rem;
        padding:0.2rem 0.5rem;
        border-radius: 0.8rem;
        font-size:0.8rem;

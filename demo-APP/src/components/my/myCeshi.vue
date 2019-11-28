@@ -71,7 +71,7 @@ export default {
     margin:2rem 0 0 1rem;
     text-align: center;
     color:#fff;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
   .content .content_top span{
     margin-left:1rem;
