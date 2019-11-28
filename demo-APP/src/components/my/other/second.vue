@@ -5,7 +5,8 @@
              
                <img :src="axios.defaults.baseURL+uimg" alt="" class="img">
               <span class="sixin" @click="sixin">私信</span>
-              <span class="intr" >关注</span>
+              <span class="intr" @click="tofan" v-show="like==0">关注</span>
+              <span class="intr" @click="nofan"  v-show="like==1">取消关注</span>
            </div>
               <div class="details_intr">
                  <p v-if="nicheng">{{nickname}}</p>
@@ -28,6 +29,7 @@ export default {
   props:{uid:{default:""}},
     data(){
       return{
+        like:0,
         active:"tab1",
         nickname:'',
         selfdom:'5555',
@@ -42,6 +44,37 @@ export default {
       }
     },
     methods:{
+      tofan(){
+           console.log(this.uid)
+           var obj={fansid:this.uid};
+           var url="msgbox/tofan";
+           this.axios.get(url,{params:obj}).then(res=>{
+                // console.log(res);
+                if(res.data.code==1){
+                   this.like=1;
+                }else{
+                    $toast("操作失败，请稍后再试")
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        },
+        nofan(){
+            var obj={fansid:this.uid};
+            var url="msgbox/nofan";
+            this.axios.get(url,{params:obj}).then(res=>{
+                // console.log(res);
+                if(res.data.code==1){
+                     this.like=0;
+                }else{
+                    $toast("操作失败，请稍后再试")
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        },
        sixin(){
           // this.$router.push("Chat")
           this.$router.push(
@@ -119,11 +152,11 @@ export default {
         border-radius: 50%;
         margin-left:1rem;
     }
-    .photo .intr{
+    .photo .intr,.photo .sixin{
       margin-right:0rem;
       background: rgba(200,200,200,0.6);
       border-radius: 1.5rem;
-      padding:0.18rem 1rem;
+      padding:0.18rem 0.9rem;
       line-height: 3.4rem;
       font-size: 0.9rem;
       color:#fff;

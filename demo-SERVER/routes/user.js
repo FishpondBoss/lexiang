@@ -25,19 +25,21 @@ router.get('/v1/login',(req,res)=>{
   console.log(111);
   var $uname=req.query.uname;
   var $upwd=req.query.upwd;
-  var sql='select uid from show_user where uname=? and upwd=?';
+  // var sql='select uid from show_user where uname=? and upwd=?';
+  var sql='select uid,uimg,nickname from show_user where uname=? and upwd=?';
+
   pool.query(sql,[$uname,$upwd],(err,result)=>{
     console.log(2222);
     if(err) throw err;
     if(result.length==0){
       res.send({code:-3,msg:'该用户尚未注册，请先注册'})
     }else{
-      // console.log(result);
+      console.log(result);
       var uid=result[0].uid;
-      console.log(uid)
+      // console.log(uid)
       req.session.uid=uid;
-       console.log(req.session.uid)
-      res.send({code:1,msg:'登录成功',uid:req.session.uid})
+      //  console.log(req.session.uid)
+       res.send({code:1,msg:'登录成功',row:result,uid:req.session.uid})
     }
   })
 })

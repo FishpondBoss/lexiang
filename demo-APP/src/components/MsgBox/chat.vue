@@ -1,218 +1,292 @@
 <template>
-  <div class="container">
-    <mt-header fixed title="可爱">
-      <router-link to="/IndexFu" slot="left">
+  <div class="chat div-wrap">
+    <!-- <myheader :title="chatWith">
+      <i class="iconfont icon-fanhui1 left" slot="left" @click="goback"></i>
+    </myheader> -->
+    <mt-header fixed :title="nickname">
+      <router-link to="/showMain" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
     </mt-header>
-    <div>
+    <!-- ref="scroll"  -->
+    <div :toBottom="true" v-if="dataList" class="scroll-wrap" :data="dataList">
       <ul>
-        <li
-          class="clearfix"
-          v-for="(talk,index) in talks"
-          :key="index"
-          v-bind:class="{'even':othername!=talk.send_from_id,'odd':othername==talk.send_from_id}"
-        >
-          <!-- <span v-show="showTime(index)" :id="index">{{getLocalTime(talk.message_time)}}</span> -->
-          <img v-bind:src="getUserimg" alt v-if="othername!=talk.send_from_id">
-          <img v-bind:src="meUserimg" alt v-else>
-          <b></b>
-          <div>
-            <p>{{talk.content}}</p>
+        <li v-for="(item,index) in dataList" :key="index"
+            :class="{'chat-right':item.sendTo == chatuid,
+              'chat-left':item.sendTo !== chatuid,
+              'chat-box':true}">
+          <!-- <div class="add-time"
+               v-if="index == 0||dataList[index-1]&&new Date(item.sendTime)-new Date(dataList[index-1].sendTime)>1000*180">
+            <span>{{new Date(item.sendTime)|chatTime}}</span>
+          </div> -->
+          <div :class="{'toright':item.sendTo == chatuid,'flex':true}">
+              <span v-if="item.sendTo!== chatuid" class="avater">
+                <img :src="axios.defaults.baseURL+uimg"/>
+              </span>
+            <span class="content">{{item.sendContent}}</span>
+            <span v-if="item.sendTo== chatuid" class="avater">
+                <img :src="axios.defaults.baseURL+myUimg"/>
+              </span>
           </div>
         </li>
       </ul>
     </div>
-    <form action onkeydown="if(event.keyCode==13)return false;">
-      <mt-field type="text" v-model="content" @keyup.native="send($event)"></mt-field>
-    </form>
-    <!-- <input type="text">
-    <button>发送</button>-->
+    <div class="chat-footer">
+      <textarea class="chat-textarea weui-textarea" v-model="content" rows="1"></textarea>
+      <div class="send" @click="sendMessage">{{sendInfo}}</div>
+    </div>
   </div>
 </template>
-<script>
-// import messagejson from "../json/messagelist.json"
-export default {
-  data() {
-    return {
-        talks:[
-            {
-                messageid:"306",
-                send_from_id:"jessica",
-                send_to_id:"15989339909",
-                message_time:"1491898640",
-                subject:"",
-                content:"33"
-            },
-            {   
-                messageid:"307",
-                send_from_id:"15989339909",
-                send_to_id:"jessica",
-                message_time:"1492408484",
-                subject:"",
-                content:"heilo"
-            }
-        ],
-        list:[],
-        othername:{default:""},
-    }
-  },
-  methods: {
-    showTime(){},
-    created() {
-        //调用加载商品列表的函数
-        this.getread();           
-    },
-    getread(){
-        var url="getChatRecord";
-        this.obj={}
-        this.axios.get(url,{params:obj})
-        .then(res=>{
-            console.log(res)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },
-    //发送消息
-    send(ev) {
-      if (ev.keyCode == 13) {
-        var sendtoid = this.userid;
-        // var sendtoid = "15989339909";
-        // console.log(sendtoid)
-        var sendfromid = "";
-        var subject = "";
-        var replyid = 0;
-        if (this.content != "") {
-          this.$http.post(this._getUrl() + "User/send",
-              {
-                sendfromid: sendfromid,
-                sendtoid: sendtoid,
-                subject: subject,
-                content: this.content,
-                replyid: replyid
-              },
-              { emulateJSON: true }
-            )
-            .then(response => {
-              response = response.body;
-              if (response.error_code == 200) {
-                Toast({
-                  message: "发送成功"
-                });
-                this.getread(); //重新获取数据
 
-                this.content = "";
-              } else {
-                Toast({
-                  message: response.error_msg
-                });
-              }
-            });
-        } else {
-          Toast({
-            message: "不能为空"
-          });
-        }
+<script>
+  import {mapState, mapMutations} from 'vuex';
+  // import myheader from 'components/myheader/my-header';
+  // import scroll from '../../components/scroll/scroll';
+  // import unlogin from '../../components/unlogin/unlogin'
+  import {Toast} from 'mint-ui';
+
+  export default {
+     props:{
+        // nickname:{default:""},
+       
+     },
+    created() {
+      
+      this.getUserInfo();
+      this.getDataList();
+      this.updateBySocket();
+      // this.updateBySocket();
+      
+    },
+    // mounted(){
+    //   // this.$refs.scroll._toBottom(1);
+    //   this.clearUnread();
+    // },
+    data() {
+      return {
+        // chatWithId: this.$route.query.chatwithid, //toUser的id
+        // chatWith: this.$route.query.chatwith,//toUser的nickname
+        chatuid:this.$route.query.uid,
+        content: '', //发送内容
+        sendInfo: "发送", 
+        dataList:[], //聊天记录
+        toUsersktid:'', //发送对象的socketid
+        nickname:'', //发送对象的网名
+        uimg:'', //发送对象的头像
+        myUimg:'' //我的头像
       }
     },
-    // loadTop() {
-    //          // var userid=this.$route.params.userid;
-    //          let page = (Math.ceil(this.talks.length/this.pagesize))+ 1;
-    //         // console.log(page)
-    //               this.$http.get(this._getUrl()+"User/readAll/userid/" + this.userid +"/pagesize/"+this.pagesize+"/page/" + page).then((response) => {
-    //                     let say_code =response.body.error_code;
-    //                     let sayLists = response.body.list;
-    //                     if(say_code=='200'){
-    //                       for (let j = sayLists.length-1; j >-1; j--) {
+    computed: {
+      ...mapState([
+        'userInfo'
+      ])
+    },
+    components: {
+      // myheader,
+      // scroll,
+      // unlogin
+    },
+    methods: {
 
-    //                          // console.log(sayLists[j])
-    //                          this.talks.unshift(sayLists[j]);
-    //                          this.contentlogin=true;
-    //                        }
-    //                     }else{
-    //                       this.allLoaded = true;
-    //                       this.$refs.loadmore.onTopLoaded();
-    //                       this.contentlogin=false;
-    //                     }
-    //               });
-    // },
-    // bottomshow(){
-    //             let count=0;
-    //             let interval=setInterval(() =>{
-    //               if(count>200){
-    //                 clearInterval(interval);
-    //               }
-    //               count++;
-    //               if(document.body.scrollTop != document.body.scrollHeight){
-    //                 document.body.scrollTop = document.body.scrollHeight;
-    //             // console.log(document.body.scrollTop)
-    //               }
-    //               if(document.body.scrollTop == document.body.scrollHeight){
-    //                  clearInterval(interval);
-    //               }
-    //             },0);
-    // }
+      updateBySocket() {
+        socket.on('receiveMsg', (data) => {
+          if (this.chatuid == data.fromId) {
+            var chatwith=this.chatuid;
+            var upContent={sendTo:0,sendContent:data.content};
+            this.dataList.push(upContent);
+            console.log("里面的datalist")
+            console.log(this.dataList)
+            window.sessionStorage.setItem(chatwith,JSON.stringify(this.dataList));
+          }
+        })
+      },
+      //获取聊天对象信息
+      getUserInfo() {
+        //自己头像
+
+        this.myUimg=this.userInfo.userInfo.uimg;
+        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+        console.log(this.userInfo);
+        var obj={uid:this.chatuid}
+        var url="chat/userInfo";
+        this.axios.get(url,{params:obj})
+        .then(res=>{
+          // console.log()
+          console.log("------------------------")
+          console.log(res)
+          //对方网名
+          this.nickname=res.data.data[0].nickname;
+          //对方头像
+          this.uimg=res.data.data[0].uimg;
+          console.log("this.myUimg");
+          console.log(this.myUimg)
+          if(res.data.code==1){
+            console.log("getUserInfo: ")
+            console.log(res)
+             this.toUsersktid=res.data.sktid.sktid;
+             console.log(this.toUsersktid)
+          }else{
+              // $toast("对方不在线，请稍后再试")
+              console.log("对方不在线，请稍后再试")
+          }
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      },
+      // clearUnread(){
+      //   this.axios.post('/chat/clearchatunread', {
+      //     from: this.userInfo._id,
+      //     to: this.tUserInfo._id
+      //   })
+      // },
+      getDataList() {
+        var chatwith=this.chatuid;
+        var a=window.sessionStorage.getItem(chatwith);
+        // //获取
+        if(a){
+          this.dataList=JSON.parse(a);    
+        }else{
+          this.dataList=[];
+        }
+        console.log("this.datalist")
+        console.log(this.dataList)
+      },
+      updateList(){
+        //  var chatwith=this.uid;
+        //  this.list=sessionStorage.getItem(chatwith);
+      },
+      // goback() {
+      //   this.$router.go(-1);
+      //   this.clearUnread();
+      // },
+      sendMessage() {
+        var chatwith=this.chatuid;
+        var myUid=this.userInfo.userInfo.uid;
+        var myNickname=this.userInfo.userInfo.nickname;
+        if (!myUid){
+          Toast("请先登录！");
+          return;
+        }
+        if (this.content == '') {
+          return;
+        }
+        // this.sendInfo = '发送中..';
+        socket.emit('chat',{toId:this.toUsersktid,content:this.content,fromId:myUid,fromImg:this.myUimg,fromNickname:myNickname});
+        var upContent={sendTo:chatwith,sendContent:this.content};
+        this.dataList.push(upContent);
+        window.sessionStorage.setItem(chatwith,JSON.stringify(this.dataList));
+
+        var a=window.sessionStorage.getItem("chatList");
+        if(!a){
+         var chatList={}
+        }else{
+          var chatList=JSON.parse(a);
+        }
+        var data={fromId:chatwith,fromImg:this.uimg,fromNickname:this.nickname,content:this.content}
+        chatList[chatwith]={data}
+        // }
+        window.sessionStorage.setItem("chatList",JSON.stringify(chatList));
+
+        console.log( window.sessionStorage.getItem(chatwith))
+        this.content="";
+        // this.sendInfo = '发送';    
+      },
+    }
   }
-}
 </script>
+
 <style scoped>
-/* div {
-  /* margin-top: 400px;
-} */ 
-/*even 偶  odd 奇*/
- ul li.odd img{
-     width:45px;
-     height:45px;
-     border-radius:50%;
-     float:left;
-     background: url(../../../public/imgs/MsgBox/02.jpg) no-repeat center center;
-     background-size:45px 45px;
-}
- ul li.even img{
-     width:45px;
-     height:45px;
-     border-radius: 50%;
-     float: right;
-     background: url(../../../public/imgs/MsgBox/02.jpg) no-repeat center center;
-     background-size: 45px 45px;
-}
- ul li.odd .in_talk p{
-     background: #fff;
-     float:left;
-     margin-left: 10px;
-     max-width:60%;
-     font-size: 14px;
-     padding:10px;
-     border-radius: 6px;
-}
- ul li.odd b{
-     width:8px;
-     height:14px;
-     display: inline-block;
-     background: url(../../../public/imgs/MsgBox/02.jpg) no-repeat;
-     background-size: 8px 14px;
-     position: absolute;
-     left:58px;
-     top:8px;
-}
- ul li.even .in_talk p{
-     background: #f6fff6;
-     float:right;
-     margin-right: 10px;
-     max-width:60%;
-     border-radius: 6px;
-     font-size: 14px;
-     padding:10px;
-}
- ul li.even b{
-     width:8px;
-     height:14px;
-     display: inline-block;
-     background: url(../../../public/imgs/MsgBox/02.jpg) no-repeat;
-     background-size: 8px 14px;
-     position: absolute;
-     right:58px;
-     top:8px;
-}
+  
+  .chat{
+    bottom: 68px;
+    padding-top: 3rem;  
+  }
+  .scroll-wrap {
+      background-color: white;
+      padding: 5px;
+  }
+  .chat-box{
+      width: 100%;
+      margin-bottom: 10px;      
+    }
+  .add-time {
+        margin: 0 auto;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.5rem;
+        height: 1.5rem;
+       
+  }
+  .add-time span {
+          background-color: rgba(172, 172, 177, 0.29);
+          color: white;
+          border-radius: 5px;
+          padding: 2px 5px;
+  }
+  .flex {
+        display: flex;
+  }
+  .avater {
+        margin: 0 10px;
+        width: 40px;
+        height: 40px;
+  }
+  .avater img {
+    width: 40px;
+    border-radius:50%;
+  }
+  .content {
+        max-width: 220px;
+        background-color: greenyellow;
+        line-height: 25px;
+        padding: 7px 1rem;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        border-radius: 10px;
+      }
+  .chat-right .flex {
+    align-items: center;
+    justify-content: flex-end;
+  }
+    /* //  .chat-right .toright {
+    //     span {
+    //     }
+    //   } */
+  .chat-right .content {
+    background-color: orange;
+    color: white;
+  }
+  
+  .chat-footer {
+      background-color: #f8f8f8;
+      position: fixed;
+      bottom: 0;
+      box-shadow: 0 0 5px #e0e0e0;
+      width: 100%;
+      height: 40px;
+      padding: 8px 5px 5px;
+      display: flex;
+      justify-content: center; 
+  }
+  .chat-textarea {
+        padding: 2px 5px;
+        display: block;
+        width: 70%;
+        margin: 3px 0;
+        border: gainsboro 1px solid;
+        border-radius: 5px;
+      }
+  .send:active {
+        background-color: #e8a205;
+      }
+  .send {
+        text-align: center;
+        width: 20%;
+        line-height: 34px;
+        background-color: orange;
+        color: white;
+        margin: 3px;
+        border-radius: 5px;
+      }
 </style>

@@ -25,7 +25,7 @@
         <FansList></FansList>
       </mt-tab-container-item>
     </mt-tab-container>
-    <tabbaricon :info="info"></tabbaricon>
+    <tabbaricon></tabbaricon>
   </div>
 </template>
  
@@ -45,8 +45,7 @@ export default {
     },
   data() {
     return {
-      selected: '1',
-      info:10
+      selected: '1'
     };
   }
 };
@@ -61,12 +60,14 @@ body{
     z-index: 10;
     display: block;
     width: 100%;
-    height: 3rem;
-    line-height: 3rem;
-    background: rgb(248, 248, 248);
+    height: 4rem;
+    line-height: 4rem;
+    /* background: rgb(248, 248, 248); */
+    background: #fff;
     top: 0;
     left: 0;
     text-align: center;
+    box-shadow: 0 0 3px 3px rgb(224, 215, 215);
 }
 .page-navbar{
   margin-bottom:3.5rem;
@@ -78,14 +79,16 @@ body{
 }
 
 .page-part{
-    margin-top: 3rem;
+    margin-top: 4rem;
 } 
 .mint-navbar .mint-tab-item.is-selected{
   border-bottom:0; 
+  /* background-color: rgb(224, 215, 215); */
 }   
 .page-title>span{
-  border-bottom: 3px solid #ccc;
+  /* border-bottom: 3px solid #ccc;
   padding-bottom: 4px;
-  border-radius :10%;; 
+  border-radius :10%;;  */
+  font-size: 1.4rem
 } 
 </style>

@@ -103,8 +103,8 @@ export default {
 <style scoped>
 .theme{
   color: rgb(41, 40, 40);
-  font-size: 30px;
-  margin:8px 10px;
+  font-size: 25px;
+  margin:10px 10px;
 }
 .mint-switch{
   margin-top:14px; 
@@ -144,14 +144,12 @@ export default {
   height: 60px;
 }
 .top .atta{
-  width: 70px;
-  height: 60px;
   margin-right:35px;
 }
 .atta img{
-  width: 40px;
-  height: 40px;
-  margin-top:10px
+  width: 30px;
+  height: 30px;
+  margin-top:12px
 }
 
 .swiper-inner {

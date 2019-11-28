@@ -1,9 +1,9 @@
 <template>
     <div class="container" @click="toChat">
-        <div class="avadar"><img src="../../../public/imgs/MsgBox/02.jpg" alt=""></div>
+        <div class="avadar"><img :src="fromImg" alt=""></div>
         <div class="center">
-            <p class="whoDo">若是自由</p>
-            <p class="corresCont">你好，很高兴认识你。</p>
+            <p class="whoDo">{{fromNickName}}</p>
+            <p class="corresCont">{{sendContent}}</p>
             <!-- <p class="time">4小时前</p> -->
         </div>
         <div class="cont">
@@ -14,14 +14,30 @@
 </template>
 <script>
      export default{
+        props:{
+            fromImg:{default:""},
+            fromNickName:{default:""},
+            sendContent:{default:""},
+            fromId:{default:0}
+            // i:{default:""}
+        },
         data(){
             return {}
         },
         methods:{
             toChat(){
-                this.$router.push("/Chat")
+                // this.$router.push("/Chat")
+                this.$router.push(
+                {path:'Chat',
+                query:{uid:this.fromId}
+                });
             }
-        }
+        },
+        created() {
+            console.log(this.fromImg)
+        },
+        
+
     }
 </script>
 <style scoped>

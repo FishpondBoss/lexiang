@@ -213,7 +213,7 @@ export default {
 
 <style scoped>
     .container{
-      width: 88%;
+      width: 80%;
       position:relative;
       padding: 20px 0;
       margin-left:60px; 
@@ -246,7 +246,7 @@ export default {
       width: 80%;
       margin-left:50px; 
       margin-top:10px; 
-      font-size: 18px;
+      font-size: 16px;
       color:rgb(77, 77, 77);
       overflow: hidden;
       text-overflow: ellipsis;
@@ -256,14 +256,14 @@ export default {
       display:flex; 
     }
     .title-img img{
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
        border-radius:50%; 
        /* vertical-align: middle;    图片文字居中   */
     }
     .nicname{
       color: rgb(21, 22, 22);
-      font-size:17px;
+      font-size:16px;
       font-weight: 600;
       color: rgb(226, 155, 41)
     }

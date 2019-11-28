@@ -74,6 +74,9 @@ export default {
  },
   methods: {
     tab(index, val) {
+      // if(this.currIndex==index){
+      //   return;
+      // }
       this.currIndex = index;
       this.$router.push(val);
     }

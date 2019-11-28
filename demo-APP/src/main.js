@@ -6,9 +6,17 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'  
 Vue.use(MintUI)
+import Router from 'vue-router'
+
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 //4.引入字体图标的样式文件
 import "./font/iconfont.css"
 import "./font/iconfont_MsgBox.css"
+import store from './store'
 import  axios from 'axios'
 axios.defaults.baseURL="http://127.0.0.1:5050/";
 axios.defaults.withCredentials=true;
@@ -51,6 +59,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

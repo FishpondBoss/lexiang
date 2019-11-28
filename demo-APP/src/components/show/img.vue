@@ -54,6 +54,7 @@ export default {
       var obj={pno:pno,pageSize:4}
       this.axios.get("img/find",{params:obj})
       .then(res=>{
+        console.log(res.data)
         this.data=this.data.concat(res.data);
       }).catch(err=>{
         console.log(err)
@@ -86,9 +87,9 @@ export default {
 }
 </script>
 <style scoped>
-/* .img{
-  background: rgb(243, 240, 240); 
-} */
+.img{
+  margin-bottom: 60px;
+}
 .video_bottom{
   display: none;
 }

@@ -3,12 +3,10 @@ var router =express.Router();
 var pool =require('../pool.js');
 
 
-
-
 //获取我的粉丝
 router.get('/myfans',(req,res)=>{
     var uid = req.session.uid;
-    // console.log("req.session.uid: "+req.session.uid)
+    console.log("req.session.uid: "+req.session.uid)
     // var uid=1;
     if(!uid){
         res.send({code:-1,msg:"请登录"});
@@ -25,7 +23,7 @@ router.get('/myfans',(req,res)=>{
                 rows:data, //当前页内容
             });
         }else if(result.length>0){
-            // console.log(result);
+            console.log(result);
             var like=[];
             var str="";
             // console.log()
@@ -34,8 +32,8 @@ router.get('/myfans',(req,res)=>{
                 like[i]={like_both:result[i].like_both};
             }
             str=str.slice(1);
-            // console.log("str:"+str)
-            // console.log(like) 
+            console.log("str:"+str)
+            console.log(like) 
             var sql1=`SELECT nickname,selfdom,uimg,uid FROM show_user WHERE uid in (${str})`;
             pool.query(sql1,(err,result)=>{
                 if(err){throw err}
@@ -50,7 +48,7 @@ router.get('/myfans',(req,res)=>{
                 })
             })
         }else{
-            // console.log(result)
+            console.log(result)
             res.send({code:-1,msg:"nonono"})
         }
   })
@@ -154,11 +152,12 @@ router.get('/nofan',(req,res)=>{
                     });
                 }
             })
-        } else{
+        }else{
             res.send({
                 code:1,   //查询编码
-                msg:"success",
-            })
+                msg:"success",//原因
+                // rows:data//当前页内容
+            });
         }
     })
 })
@@ -188,50 +187,5 @@ router.get('/getcomment',(req,res)=>{
     })
 })
 
-// // 注册
-// router.get('/reg',(req,res)=>{
-//   var obj=req.query;
-//   var sql1='SELECT uid FROM hll_reg WHERE phone=?'
-//   pool.query(sql1,[obj.phone],(err,result)=>{
-//     if(err){throw err}
 
-//     if(result.length>0){
-//         res.send({code:-2,msg:"该手机号已经注册，请登录"})
-//     }else{
-//       var sql2='INSERT INTO hll_reg SET ?'; 
-//       pool.query(sql2,[obj],(err,result)=>{
-//         if(err){throw err}
-//         console.log(result)
-//          res.send({code:200,msg:"注册成功"})
-//       })
-//     }
-//   })
-// });
-// //登录
-// router.get('/login',(req,res)=>{
-//   var phone=req.query.phone;
-//   var upwd=req.query.upwd;
-//   var sql='SELECT uid FROM hll_reg where phone=? AND upwd=?';
-//   pool.query(sql,[phone,upwd],(err,result)=>{
-//     if(err){throw err}
-//     console.log(result)
-//     if(result.length>0){
-//     res.send({code:1,msg:"登录成功"})
-//     }else{
-//       res.send({code:-1,msg:"登录失败"})
-//     }
-//   })
-// })
-// //修改密码/密码找回
-// router.get('/fupwd',(req,res)=>{
-//   var obj=req.query;
-//   var sql1='SELECT uid FROM hll_reg WHERE phone=?'
-//   pool.query(sql1,[obj.phone],(err,result)=>{
-//     if(err){throw err}
-//       console.log(result)
-//     if(result.length==0){
-//         res.send({code:2,msg:"该手机号未注册，请注册"})
-//     }
-//   })
-// });
 module.exports=router;

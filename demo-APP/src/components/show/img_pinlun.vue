@@ -14,23 +14,17 @@
     <div id="main">
   <!-- 图文消息 -->
         <row   
-        :auimg="axios.defaults.baseURL+item.uimg"
-        :imgSrc="item.psrc"
-        :aunick="item.nickname"
-        :desc="item.pdesc"
-        :uptime="item.upTime|filter_time"
-        :z=false
-        :data-id="item.pid"
-      ></row> 
+          :item="item"
+        ></row> 
   <!-- 评论 -->
-      <div class="pinlun_main" v-for="(item,index) in pdata" :key="index">
+      <div class="pinlun_main" v-for="(pitem,index) in pdata" :key="index">
         <div class="left">
-            <img :src="axios.defaults.baseURL+item.uimg">
+            <img :src="axios.defaults.baseURL+pitem.uimg">
           </div>
           <div class="right">
-            <p class="name">{{item.nickname}}</p>
-            <p class="desc">{{item.cdetails}}</p>
-            <p class="time">{{item.uptime}}</p>
+            <p class="name">{{pitem.nickname}}</p>
+            <p class="desc">{{pitem.cdetails}}</p>
+            <p class="time">{{pitem.uptime}}</p>
           </div>
       </div>
     </div>
@@ -64,8 +58,7 @@
   </div>
 </template>
 <script>
-import row from './img_row.vue'
-import comments from './pinlun_row.vue'
+import row from './pinlun_row.vue'
 import { Popup } from 'vant';
 export default {
     props:{
@@ -74,7 +67,6 @@ export default {
     },
    components:{
      "row":row,
-     "comments":comments
    },
    data() {
      return {
@@ -127,8 +119,7 @@ export default {
       showPopup() {
         this.show = true;
       },
-     load(){
-       
+     load(){ 
        var obj={pid:this.item.pid}
        this.axios.get("img/pinlun",{params:obj})
       .then(res=>{
@@ -166,6 +157,7 @@ export default {
   created() {
        this.item=this.$route.query.item;
        this.load()
+       console.log(this.item.pid)
    },
   // 监听滚轮
   mounted () {

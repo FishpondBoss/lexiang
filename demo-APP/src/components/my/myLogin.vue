@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import {mapState, mapMutations} from 'vuex';//yj
 export default {
   data(){
     return{
@@ -65,7 +66,17 @@ export default {
   },
   watch:{
   },
-  methods:{
+    // sockets:{},/////////////////////////////yj T
+      computed: {
+          ...mapState([
+            'userInfo'
+          ])
+      },
+      methods:{
+        ...mapMutations([
+        'set_userInfo'
+      ]),
+       ///////////////////////////////////////////yj E
     onSuccess(){
             // this.$toast ("验证成功")
             this.success=false;
@@ -82,8 +93,22 @@ export default {
                 }, 1000);
               }else if(res.data.code==1){
                 console.log(res.data)
+                /////////////////////////////////////////////////yj T
+                console.log(res.data.uid)
+                this.set_userInfo({
+                  userInfo:{
+                    uid:res.data.row[0].uid,
+                    uimg:res.data.row[0].uimg,
+                    nickname:res.data.row[0].nickname
+                    }
+                })
+                console.log("this.userInfo")
+                console.log(this.userInfo)
+                ////////////////////////////////////////////////// yj E
                   this.$toast(res.data.msg)
                   setTimeout(()=>{
+                     console.log("login的触发 res.data.row[0].uid:"+res.data.row[0].uid)
+                    socket.emit('login',res.data.row[0].uid);
                     this.$router.push("/showMain");
                   },1000)
               }

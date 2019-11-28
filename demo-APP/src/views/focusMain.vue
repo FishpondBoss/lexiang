@@ -80,9 +80,6 @@ export default {
 }
 </script>
 <style scoped>
-.img{
-  /* background: rgb(243, 240, 240); */
-}
 .focus_top{
   color:#4eb5f1;
   padding:15px 15px 15px 15px; 
