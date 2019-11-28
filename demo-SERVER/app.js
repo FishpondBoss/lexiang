@@ -6,7 +6,6 @@ const cors=require("cors");
 const mysql= require("mysql")
 /*引入路由模块*/
 var userRouter=require('./routes/user.js')
-const videoRouter=require('./routes/video.js');
 const imgRouter=require('./routes/img.js')
 var msgboxRouter=require('./routes/msgbox.js')
 var app = express();
@@ -30,7 +29,6 @@ app.listen(5050);
 app.use(express.static('public'));
 /*使用路由器来管理路由*/
 app.use('/user',userRouter)
-app.use('/video',videoRouter);
 app.use('/img',imgRouter);
 app.use('/msgbox',msgboxRouter);
 

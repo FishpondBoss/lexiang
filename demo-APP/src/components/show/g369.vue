@@ -40,20 +40,19 @@ export default {
   display: flex;
  justify-content:start;
   flex-wrap: wrap;
-  padding: 6px;
 }
 .aa div{
   /* 三张 */
- width: 32%;   
+ width: 31.5%;   
 }
 .aa div.small:nth-child(2){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small:nth-child(5){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small:nth-child(8){
-    margin:0 7px; 
+    margin:0 6px; 
 }
 .aa div.small img{
   width: 100%;

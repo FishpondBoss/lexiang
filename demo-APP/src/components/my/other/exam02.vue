@@ -45,23 +45,25 @@
          <div>全部评论{{list.length}}</div>
           <div>最新↑↓</div>
     </div>
-      <div class="content" v-for="(item,i) of list" :key="i">
-                    <div class="body">
-                            <div class="title">
-                                        <img :src="axios.defaults.baseURL+uimg" alt=""  class="img">
-                                        <div class="bt">
-                                            <span>{{nickname}}</span><br>
-                                            <span>{{item.upTime}}</span>
-                                        </div>
+        <div v-if="this.list!=''">
+            <div class="content" v-for="(item,i) of list" :key="i">
+                            <div class="body">
+                                    <div class="title">
+                                                <img :src="axios.defaults.baseURL+uimg" alt=""  class="img">
+                                                <div class="bt">
+                                                    <span>{{nickname}}</span><br>
+                                                    <span>{{item.upTime}}</span>
+                                                </div>
+                                    </div>
+                                    <div class="dianzan" v-show="item.pfavour>=3">
+                                <img src="../../../../public/imgs/icon/hot.png" alt="">                        
+                                    </div>
                             </div>
-                            <div class="dianzan" v-show="item.pfavour>=3">
-                           <img src="../../../../public/imgs/icon/hot.png" alt="">                        
+                            <div class="mytext">{{item.cdetails}}</div>
+                            <div class="text">
+                                {{item.nickname}}:{{item.pdesc}}
                             </div>
-                    </div>
-                    <div class="mytext">{{item.cdetails}}</div>
-                    <div class="text">
-                         {{item.nickname}}:{{item.pdesc}}
-                    </div>
+            </div>
       </div>
       <div class="bottom">不要往下看啦~，想看也没有了哦</div>
   </mt-tab-container-item>
@@ -93,15 +95,15 @@ export default {
         reborn(){
             var url="user/v1/yyourself";
             var obj={uid:this.uid};
-            console.log("这里的uid:"+this.uid)
+            // console.log("这里的uid:"+this.uid)
             this.axios.get(url,{params:obj}).then(res=>{
-                console.log("hahahah")
+                // console.log("hahahah")
                 // console.log(res)
                  if(res.data.code==200){
                 var data=res.data.msg;
                 this.list1=data;
-                console.log(1)
-                console.log(this.list1)
+                // console.log(1)
+                // console.log(this.list1)
                   for( var item of this.list1){
                         var arr=item.upTime.match(/\d+/g);
                             // console.log(arr);
@@ -109,8 +111,8 @@ export default {
                                 var str=item.psrc
                             if(str.indexOf("|")!==-1){
                                 item.psrc=str.split("|")[0];
-                                console.log(str.split("|"))
-                                console.log(item.psrc)
+                                // console.log(str.split("|"))
+                                // console.log(item.psrc)
                             }
                 }
                 for(var i=this.list1.length-1;i>=0;i--){
@@ -122,14 +124,18 @@ export default {
             })
         },
         update(){
+            console.log("list---------")
+            console.log(this.uid+"我获得的uid")
             var url="user/v1/comother";
              var obj={uid:this.uid};
-             console.log("这里的uid:"+this.uid)
+            //  console.log("这里的uid:"+this.uid)
             this.axios.get(url,{params:obj}).then(res=>{
-                // console.log(res.data)
+                 console.log(res.data)
                 // console.log(res.data)
                 this.list=res.data.msg;
                     // console.log(this.list)
+                if(res.data.code==200){
+
                     
                 for( var item of this.list){
                         var arr=item.upTime.match(/\d+/g);
@@ -138,6 +144,10 @@ export default {
                 }
                  for(var i=this.list.length-1;i>=0;i--){
                     this.list[this.list.length-1-i]=this.list[i];
+                }
+                // console.log(this.list)
+                }else{
+                    this.list=''
                 }
             }).catch(err=>{
                 console.log(err)
@@ -220,7 +230,9 @@ export default {
          }
       
          .mytext{
-             margin:1rem 0 0 0.5rem;
+             /* margin:1rem 0 0 0.5rem; */
+             width: 80%;
+             padding:1rem 0.5rem 0 0.5rem;
          }
          .text{
               background: #eee;

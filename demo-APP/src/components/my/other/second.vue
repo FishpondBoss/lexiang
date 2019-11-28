@@ -5,7 +5,7 @@
              
                <img :src="axios.defaults.baseURL+uimg" alt="" class="img">
               <span class="sixin" @click="sixin">私信</span>
-              <span class="intr" @click="guanzh">关注</span>
+              <span class="intr" >关注</span>
            </div>
               <div class="details_intr">
                  <p v-if="nicheng">{{nickname}}</p>
@@ -66,6 +66,7 @@ export default {
       updata(){
         var url="user/v1/other";
         var obj={uid:this.uid};
+        console.log(this.uid+"我获得的uid")
         console.log("这里的uid:"+this.uid)
         this.axios.get(url,{params:obj}).then(res=>{
          var data= res.data.msg[0];

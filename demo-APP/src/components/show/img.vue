@@ -14,6 +14,7 @@
      :pfavour="item.pfavour"
      :pinlunCount="item.pinlunCount"
      :z=true
+     :isLogin="isLogin"
      ></row>
      
   <mt-button size="large" @click="addmore">加载更多</mt-button>
@@ -30,6 +31,7 @@ export default {
     return{
       data:[],
       pno:2,
+      isLogin:""   //获取此时登录的uid
     }
   },    
   filters:{
@@ -61,19 +63,32 @@ export default {
       this.addVideo(this.pno);
       this.pno++;
      },  
+    //  判断是否登录
+    getIsLongin(){
+      this.axios.get("img/isLogin")
+      .then(res=>{
+        var result=res.data.code;
+        if(result==200){
+          this.isLogin=res.data.msg;
+        }else{
+          this.isLogin=""
+        }
+      })
+    }
   },
-
+  
   // 初始化页面时加载数据
   created() {
     this.addVideo(1)
+    this.getIsLongin();
   } ,
 
 }
 </script>
 <style scoped>
-.img{
-  background: rgb(236, 236, 236);
-}
+/* .img{
+  background: rgb(243, 240, 240); 
+} */
 .video_bottom{
   display: none;
 }

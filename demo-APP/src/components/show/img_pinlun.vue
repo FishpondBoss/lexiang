@@ -19,7 +19,7 @@
         :aunick="item.nickname"
         :desc="item.pdesc"
         :uptime="item.upTime|filter_time"
-        :a=false
+        :z=false
         :data-id="item.pid"
       ></row> 
   <!-- 评论 -->
@@ -37,19 +37,18 @@
     <!-- 底部评论点赞图标 -->
     <div class="pinlun_bottom">
       <div class="pinlun">
-         <van-cell is-link @click="showPopup"> 
-           <img src="http://127.0.0.1:5050/material/images/v_pinlun.png">
-         </van-cell>
+         <div @click="showPopup"> 
+           <img src="../../../public/imgs/show/v_pinlun.png">
+         </div>
       </div>
      <div class="zan">
-       <img src="http://127.0.0.1:5050/material/images/v_zan.png">
+       <img src="../../../public/imgs/show/v_zan.png">
      </div>
     </div>
     <!-- 底部站位 -->
     <div class="b_zhanwei"></div>
     <!-- 弹出评论框 -->
      <van-popup v-model="show" position="bottom" :style="{ height: '30%' }">
-      <van-cell-group>
           <van-field
             v-model="message"
             rows="2"
@@ -61,13 +60,13 @@
             show-word-limit
           />
         <van-button type="primary" size="large" @click.native="insert">发送</van-button> 
-        </van-cell-group> 
       </van-popup>
   </div>
 </template>
 <script>
 import row from './img_row.vue'
 import comments from './pinlun_row.vue'
+import { Popup } from 'vant';
 export default {
     props:{
       // 接收父元素数据
@@ -106,14 +105,12 @@ export default {
    },
    methods: {
      insert(){
-
        var cdetails=this.message;
        if(cdetails==""){
           this.$toast("评论不能为空")
        }else{
           var pid=this.item.pid;
           var uptime=new Date().toLocaleString().replace(/[年月]/g, '-').replace(/[日上下午]/g, '');
-          //  alert(uptime)
           var obj={pid:pid,cdetails:cdetails,uptime:uptime}
             this.axios.get("img/addpinglun",{params:obj})
           .then(res=>{
@@ -131,8 +128,8 @@ export default {
         this.show = true;
       },
      load(){
-       var pid=this.item.pid;
-       var obj={pid:pid}
+       
+       var obj={pid:this.item.pid}
        this.axios.get("img/pinlun",{params:obj})
       .then(res=>{
         this.pdata=res.data
@@ -153,7 +150,6 @@ export default {
           }
       }
    },
-   
   filters:{
         filter_time(time){
           var year=time.slice(0,4);
@@ -170,8 +166,6 @@ export default {
   created() {
        this.item=this.$route.query.item;
        this.load()
-       this.insert()
-       
    },
   // 监听滚轮
   mounted () {

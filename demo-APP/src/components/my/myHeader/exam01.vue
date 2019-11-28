@@ -105,10 +105,8 @@ export default {
                                 item.psrc=str.split("|")[0];
                                 console.log(str.split("|"))
                                 console.log(item.psrc)
-
                             }
                 }
-                console.log(this.list1)
                 for(var i=this.list1.length-1;i>=0;i--){
                     this.list1[this.list1.length-1-i]=this.list1[i];
                 }

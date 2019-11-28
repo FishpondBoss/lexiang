@@ -1,13 +1,13 @@
 <template>
    <div class="top">
-    <div>动态</div>
+    <div class="theme">广场</div>
     <div class="switch"  >
-      <mt-switch v-model="choose" @change.native="chooses"></mt-switch>
+      <!-- <mt-switch v-model="choose" @change.native="chooses"></mt-switch> -->
     </div>
     <div class="atta">
-      <van-cell is-link @click="showPopup">
-             <img src="http://127.0.0.1:5050/material/images/guanzhu.png">
-      </van-cell>
+      <div @click="showPopup">
+             <img src="../../../public/imgs/show/guanzhu.png">
+      </div>
     </div>
     <!--  显示关注-->
    <van-popup v-model="show" position="right" :style="{height:'100%',width:'100%'}" closeable>  
@@ -70,15 +70,12 @@ export default {
   },
   methods: {
     follow(){
-        console.log("1111111follw进了")
         this.axios.get("img/follow")
         .then(res=>{
-          console.log(res.data)
           var list=res.data
           for(var item of list){
            this.lists.push(item);
           }
-          console.log(this.lists);
         })
         .catch(err=>{
           console.log(err);
@@ -104,6 +101,11 @@ export default {
 }
 </script>
 <style scoped>
+.theme{
+  color: rgb(41, 40, 40);
+  font-size: 30px;
+  margin:8px 10px;
+}
 .mint-switch{
   margin-top:14px; 
   margin-left:14px; 
@@ -126,145 +128,81 @@ export default {
 </style>
 <style scoped>
 .top{
-  /* height: 60px; */
+  height: 60px;
   width: 100%;
   position: fixed;
   top:0px;
   z-index:999;
   display:flex;
   justify-content:space-between;
-  /* line-height: 60px; */
   padding:5px 20px;
   background:#fff;
-
+  box-shadow: 0px 0px 7px 3px rgb(216, 216, 216)
 }
 .top .switch{
   width: 27%;
   height: 60px;
 }
 .top .atta{
-  width: 60px;
-  height: 50px;
+  width: 70px;
+  height: 60px;
+  margin-right:35px;
 }
 .atta img{
   width: 40px;
   height: 40px;
   margin-top:10px
 }
- /* 关注 */
-.guanzhu{/*已关注的样式*/
-  font-size: 0.9rem;
-  background-color: #fff;/*#bdbebd*/
-  /* height: 1.7rem; */
-  padding: 0rem 0.6rem;
-  border-radius: 1.8rem;
-  text-align: center;
-  line-height: 1.7rem;
-  color: #bdbdbd;
-  font-weight: 700;
-  border: 1px solid #bdbebd;
-  cursor: pointer;
-}
-.wguanzhu{
-  font-size: 12px;
-  background-color: #38ff;
-  /* height: 30px; */
-  padding: 2px 6px;
-  border-radius: 1.8rem;
-  text-align: center;
-  line-height: 1.2rem;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-}
 
- /*  */
-  .swiper-inner {
-    width: 100%;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: #ccc;
-  }
-  .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 180px;
-    height: 220px;
-    background-color: #fff;
-    border-radius: 1rem;
-  }
-  .swiper_txt{
+.swiper-inner {
+  width: 100%;
+  height: 12rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #ccc;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 10rem;
+  height: 11rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  
+}
+ .swiper_txt{
     text-align: center;
+    border-radius: 20px;
   }
   .swiper_txt >img{
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
     margin-top: 1rem;
-    
   }
   .swiper-p1{
     width: 50%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 17px;
+    font-size: 0.8rem;
     font-weight: bold;
     margin: 0 auto;
   }
   .swiper-p2{
     width: 70%;
-    height: 20px;
-    font-size: 14px !important;
+    font-size: 0.7rem !important;
     margin: 0 auto;
     color:#3e3e3e;
-    margin-top: 10px;
-    overflow: hidden;
+    margin-top: 0.2rem;
   }
   #swiper-p3{
     width: 50%;
     margin:0 auto ;
     margin-top:0.5rem ;
   }
-  /* 底部列表 */
-  .txt-list{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-    
-  }
-  .txt-list img{
-    width: 70px;
-    /* height: 60px; */
-    border-radius: 0.5rem;
-  }
-  .txt-left{
-    width: 80%;
-    display: flex;
-    /* background-color: #0ff; */
-  }
-  .txt-h3{
-    font-size: 16px;
-    margin-left: 1rem;
-    margin-top: 0.5rem;
-  }
-  .txt-p{
-    width: 62%;
-    color:#3e3e3e;
-    font-size: 0.5rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-top: 0.5rem;
-    margin-left: 1rem;
-  } 
-  .txt-right>#txt-gz{
-    margin-top: 20px;
-    border-radius:20px;
-    padding:2px 15px;
-    margin-right: 5px;
-  }
-.slide-fade{
+/* 轮播图 */
+  .slide-fade{
   position: fixed;left:0;right: 0;
   width: 100%;
   background-color: white;

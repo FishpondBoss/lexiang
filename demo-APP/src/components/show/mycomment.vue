@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+import { Dialog } from 'vant';
 export default {
   props:{
     uimg:{default:""},
@@ -32,12 +32,18 @@ export default {
   },
   methods: {
       tofan(){
-        console.log(this.fansid)
         var obj={fansid:this.fansid};
         var url="msgbox/tofan";
         this.axios.get(url,{params:obj}).then(res=>{
-            console.log(res.data)
-            if(res.data.code==1){
+            if(res.data.code==-1){
+              Dialog.confirm({
+              title: '提示',
+              message: '请先登录'
+            }).then(() => {
+              this.$router.push({path:'/Mylogin'})   //跳转到登录页面
+            }).catch(() => {  
+            });
+            }else if(res.data.code==1){
               console.log("关注成功")
               // this.$emit("tobefan",this.i)
               this.fanshow=0;

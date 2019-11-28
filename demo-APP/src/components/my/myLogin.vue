@@ -7,7 +7,7 @@
               <div class="up">
                   欢迎登录乐享
               </div>
-                <van-cell-group>
+              
               <van-field
                 v-model="uname"
                 required
@@ -28,7 +28,7 @@
                 right-icon="question-o"
                 @click-right-icon="$toast('密码长度在3-16位')"
               />
-            </van-cell-group>
+           
               <div class="center">
                   <span  @click="forupwd">忘记密码?</span>
                   <span  @click="myreg">立即注册</span>
