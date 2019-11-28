@@ -5,8 +5,8 @@
       <!-- <mt-switch v-model="choose" @change.native="chooses"></mt-switch> -->
     </div>
     <div class="atta">
-      <div @click="showPopup">
-             <img src="../../../public/imgs/show/guanzhu.png">
+      <div  @click="showPopup">
+         <img src="../../../public/imgs/show/guanzhu.png">
       </div>
     </div>
     <!--  显示关注-->

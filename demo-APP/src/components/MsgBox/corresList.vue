@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="chatList" class="v1">
+        <div v-show="active==0" class="v1">
             <img src="../../../public\imgs\nomsg.png" alt="">
         </div>
         <Corres v-for="(item,i) in chatList" :key="i"
@@ -9,6 +9,7 @@
         :fromNickName=item.data.fromNickname
         :sendContent=item.data.content
         ></Corres>
+
     </div>
 </template>
 <script>
@@ -21,7 +22,13 @@ export default{
     },
     data(){
         return{
+            
             chatList:{}
+        }
+    },
+    computed: {
+        active(){
+            return Object.keys(this.chatList).length;  
         }
     },
     created(){
