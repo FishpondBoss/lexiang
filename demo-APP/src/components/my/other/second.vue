@@ -4,7 +4,7 @@
            <div class="photo">
              
                <img :src="axios.defaults.baseURL+uimg" alt="" class="img">
-              <span class="sixin">私信</span>
+              <span class="sixin" @click="sixin">私信</span>
               <span class="intr" @click="guanzh">关注</span>
            </div>
               <div class="details_intr">
@@ -42,12 +42,24 @@ export default {
       }
     },
     methods:{
-      sixin(){
-          this.$router.push("Chat")
+       sixin(){
+          // this.$router.push("Chat")
+          this.$router.push(
+          {path:'Chat',
+          query:{uid:this.uid}
+          });
       },
-      guanzh(){
-
-      },
+      // guanzh(){
+      //     var url="user/v1/like";
+      //     var obj={like_uid:this.uid};
+      //     this.axios.put(url,this.qs.stringify(obj))
+      //     .then(res=>{
+      //         console.log(res);
+      //     })
+      //     .catch(err=>{
+      //       console.log(err);
+      //     })
+      // },
       handle(event){
         this.active=event.target.dataset.id;
       },
@@ -74,11 +86,24 @@ export default {
         }).catch(err=>{
           throw err;
         })
-      }
+      },
+//       update(){
+//         console.log("我来了")
+//         var url="user/v1/likeother";
+//         this.axios.get(url)
+//         .then(res=>{
+//           console.log("我进来了")
+//           console.log(res);
+//         }).catch(err=>{
+//           console.log(err);
+//         })
+//  console.log("我走了")
+//       }
 
     },
     created(){
         this.updata()
+        // this.update()
     }
 }
 </script>

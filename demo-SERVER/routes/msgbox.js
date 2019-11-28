@@ -8,7 +8,7 @@ var pool =require('../pool.js');
 //获取我的粉丝
 router.get('/myfans',(req,res)=>{
     var uid = req.session.uid;
-    console.log("req.session.uid: "+req.session.uid)
+    // console.log("req.session.uid: "+req.session.uid)
     // var uid=1;
     if(!uid){
         res.send({code:-1,msg:"请登录"});
@@ -25,7 +25,7 @@ router.get('/myfans',(req,res)=>{
                 rows:data, //当前页内容
             });
         }else if(result.length>0){
-            console.log(result);
+            // console.log(result);
             var like=[];
             var str="";
             // console.log()
@@ -34,8 +34,8 @@ router.get('/myfans',(req,res)=>{
                 like[i]={like_both:result[i].like_both};
             }
             str=str.slice(1);
-            console.log("str:"+str)
-            console.log(like) 
+            // console.log("str:"+str)
+            // console.log(like) 
             var sql1=`SELECT nickname,selfdom,uimg,uid FROM show_user WHERE uid in (${str})`;
             pool.query(sql1,(err,result)=>{
                 if(err){throw err}
@@ -50,7 +50,7 @@ router.get('/myfans',(req,res)=>{
                 })
             })
         }else{
-            console.log(result)
+            // console.log(result)
             res.send({code:-1,msg:"nonono"})
         }
   })

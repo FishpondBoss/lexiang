@@ -168,15 +168,15 @@ router.get("/v1/myself",(req,res)=>{
 //别人
 router.get("/v1/yyourself",(req,res)=>{
   var uid=req.query.uid;
-  console.log(uid+"b");
+  // console.log(uid+"b");
  var sql="select * from show_picture where uid=?";
  pool.query(sql,[uid],(err,result)=>{
    if(err) throw err;
-   console.log("hahhahaha")
-   console.log(result)
+  //  console.log("hahhahaha")
+  //  console.log(result)
 
     if(result.length>0){
-      console.log(133)
+      // console.log(133)
       res.send({code:200,msg:result});
     }else{
       res.send({code:400,msg:"空空如也"})
@@ -186,13 +186,13 @@ router.get("/v1/yyourself",(req,res)=>{
 //别人主页内容
 router.get("/v1/other",(req,res)=>{
   var uid=req.query.uid;
-  console.log(uid+"a")
+  // console.log(uid+"a")
   var sql="select * from show_user where uid=?";
   pool.query(sql,[uid],(err,result)=>{
     if(err) throw err;
-    console.log(456)
+    // console.log(456)
      res.send({code:200,msg:result})
-     console.log(result);
+    //  console.log(result);
   });
 })
 //别人主页获取内容
@@ -202,14 +202,42 @@ router.get("/v1/comother",(req,res)=>{
   pool.query(sql,[uid],(err,result)=>{
     if(err) throw err;
     if(result.length>0){
-      console.log(789)
-      console.log(result);
+      // console.log(789)
+      // console.log(result);
       res.send({code:200,msg:result})
     }else{
       res.send({code:400,msg:"查询失败"})
     }
   })
 })
+// //是否关注别人
+// router.get("v1/likeother",(req,res)=>{
+//   console.log("我来了")
+//   var uid=req.session.uid;
+//   if(!uid){
+//     res.send({code:-1,msg:"请登录"});
+//     return;
+//    }
+//   var sql="select * from user_like where uid=?";
+//   pool.query(sql,[uid],(err,result)=>{
+//     if(err) throw err;
+//     console.log("我进来了")
+//     if(result.length>0){
+//       res.send({code:200,msg:result})
+//     }else{
+//       res.send({code:400,msg:"请求失败"})
+//     }
+//   }) 
+// })
+// //关注
+// // router.put("v1/like",(req,res)=>{
+// //   var uid=req.session.uid;
+// //   if(!uid){
+// //     res.send({code:-1,msg:"请登录"});
+// //     return;
+// //    }
+// //   var sql="UPDATE  SET  WHERE "
+// // })
 //退出登录
 router.get("/v1/quit",(req,res)=>{
   var uid=req.session.uid;
