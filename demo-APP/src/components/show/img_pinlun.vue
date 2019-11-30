@@ -92,11 +92,10 @@ export default {
       title:"正文"
      }
    },
-   updated() {
-  
-   },
    methods: {
      insert(){
+       var ss=window.sessionStorage.getItem("myInfo")
+       var xx=JSON.parse(ss)
        var cdetails=this.message;
        if(cdetails==""){
           this.$toast("评论不能为空")
@@ -109,7 +108,9 @@ export default {
             console.log(res.data)
             if(res.data.code==1){
               this.$toast("评论成功")
-               this.$router.push({path:'/show_pinlun',query:{item:this.item}});
+              var newPL={cdetails:cdetails,nickname:xx.nickname,uptime:uptime,uimg:xx.uimg}
+              this.pdata.push(newPL)
+              this.show=false;
             }
           }).catch(err=>{
             console.log(err)
@@ -141,23 +142,10 @@ export default {
           }
       }
    },
-  filters:{
-        filter_time(time){
-          var year=time.slice(0,4);
-          var month=time.slice(5,7);
-          var data=time.slice(8,10);
-          var hour=time.slice(11,16)
-          if(year>2018){
-            return `${month}月${data}日${hour}`
-          }else{
-            return `${year}年${month}月${data}日`
-          }
-        },
-    },
+  
   created() {
        this.item=this.$route.query.item;
        this.load()
-       console.log(this.item.pid)
    },
   // 监听滚轮
   mounted () {

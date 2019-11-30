@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      fanshow:1,
+      fanshow:0,
     }
   },
   methods:{
@@ -46,14 +46,13 @@ export default {
         })
       },
       nofan(){
+        this.$messagebox.confirm("是否要取消关注")
+        .then(res=>{
           var obj={fansid:this.fansid};
           var url="msgbox/nofan";
           this.axios.get(url,{params:obj}).then(res=>{
               // console.log(res)
               if(res.data.code==1){  
-                this.$messagebox.confirm("是否要取消关注")
-                .then(res=>{console.log("确认")})
-                .catch(err=>{console.log("取消")})
                 this.fanshow=1;
               }else{
                 $toast("取消关注")
@@ -62,6 +61,8 @@ export default {
           .catch(err=>{
               console.log(err);
           })
+        })
+        .catch(err=>{console.log("取消")})  
         },
   }
 }

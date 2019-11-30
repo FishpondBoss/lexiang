@@ -29,7 +29,7 @@
 </div> 
         
     <!-- 底部列表 --> 
-      <mytxt v-for="(item,i) of lists"  :key="i"
+      <mytxt v-for="(item,i) of listsBot"  :key="i"
       :nickname="item.nickname"
       :selfdom="item.selfdom"
       :uimg="axios.defaults.baseURL+item.uimg"
@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       lists:[],
+      listsBot:[],
       choose:"",
       show:false,
       swiperOption: {
@@ -69,6 +70,18 @@ export default {
     }
   },
   methods: {
+     myfollow(){
+      this.axios.get("img/myfollow")
+      .then(res=>{
+        this.listsBot=res.data.rows
+         console.log(res.data)
+        // console.log(lists)
+        
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
     follow(){
         this.axios.get("img/follow")
         .then(res=>{
@@ -97,6 +110,7 @@ export default {
   created() {
     this.chooses()
     this.follow()
+    this.myfollow()
   },
 }
 </script>

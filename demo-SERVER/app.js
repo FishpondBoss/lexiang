@@ -17,9 +17,8 @@ var chatRouter=require('./routes/chat.js')
 var app = express();
 
 //使用body-parser中间件
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.urlencoded({limit:'50mb',extended:true}));
-app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors({
   origin:['http://localhost:8080',"http://127.0.0.1:8080"],
   credentials:true

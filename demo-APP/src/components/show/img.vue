@@ -1,5 +1,5 @@
 <template>
-<div class="img">
+<div class="img img_mt">
   <!-- 全部图文区 -->
    <row   
      v-for="(item,index) in data" 
@@ -87,7 +87,7 @@ export default {
 }
 </script>
 <style scoped>
-.img{
+.img_mt{
   margin-bottom: 60px;
 }
 .video_bottom{

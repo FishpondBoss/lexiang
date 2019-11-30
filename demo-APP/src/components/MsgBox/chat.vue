@@ -20,7 +20,7 @@
             <span>{{new Date(item.sendTime)|chatTime}}</span>
           </div> -->
           <div :class="{'toright':item.sendTo == chatuid,'flex':true}">
-              <span v-if="item.sendTo!== chatuid" class="avater">
+              <span v-if="item.sendTo != chatuid" class="avater">
                 <img :src="axios.defaults.baseURL+uimg"/>
               </span>
             <span class="content">{{item.sendContent}}</span>
@@ -103,10 +103,12 @@
       //获取聊天对象信息
       getUserInfo() {
         //自己头像
-
-        this.myUimg=this.userInfo.userInfo.uimg;
+        var ss=window.sessionStorage.getItem("myInfo")
+        var xx=JSON.parse(ss)
+        // this.myUimg=this.userInfo.userInfo.uimg;
+        this.myUimg=xx.uimg;
         console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-        console.log(this.userInfo);
+        // console.log(this.userInfo);
         var obj={uid:this.chatuid}
         var url="chat/userInfo";
         this.axios.get(url,{params:obj})
@@ -161,9 +163,13 @@
       //   this.clearUnread();
       // },
       sendMessage() {
+        var ss=window.sessionStorage.getItem("myInfo")
+        var xx=JSON.parse(ss)
         var chatwith=this.chatuid;
-        var myUid=this.userInfo.userInfo.uid;
-        var myNickname=this.userInfo.userInfo.nickname;
+        // var myUid=this.userInfo.userInfo.uid;
+        // var myNickname=this.userInfo.userInfo.nickname;
+        var myUid=xx.uid;
+        var myNickname=xx.nickname;
         if (!myUid){
           Toast("请先登录！");
           return;
@@ -188,7 +194,7 @@
         // }
         window.sessionStorage.setItem("chatList",JSON.stringify(chatList));
 
-        console.log( window.sessionStorage.getItem(chatwith))
+        // console.log( window.sessionStorage.getItem(chatwith))
         this.content="";
         // this.sendInfo = '发送';    
       },

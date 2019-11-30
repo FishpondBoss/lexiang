@@ -6,7 +6,7 @@
           <img :src="axios.defaults.baseURL+item.uimg">
         </span>
         <div class="title_info">
-            <span class="nicname">{{item.nickname}}</span><p class="uptime">{{item.upTime}}</p>
+            <span class="nicname">{{item.nickname}}</span><p class="uptime">{{time}}</p>
         </div>
       </div>
       <div class="desc">{{item.pdesc}}</div>
@@ -37,6 +37,7 @@ export default {
   },
   data(){
     return{
+      time:'',
       imgSrc:"",
       imgsSrc:[],
       imglen:0,
@@ -46,7 +47,23 @@ export default {
      isControls:true,  //视频控制器显示隐藏
     }
   },
+  filters:{
+        
+    },
   methods: {
+    filter_time(time){
+          if(time!==undefined){
+            var year=time.slice(0,4);
+            var month=time.slice(5,7);
+            var data=time.slice(8,10);
+            var hour=time.slice(11,16)
+            if(year>2018){
+              this.time=`${month}月${data}日${hour}`
+            }else{
+              this.time=`${year}年${month}月${data}日`
+            }
+          }
+        } ,
       geren(){
         this.$router.push({path:'/Myyourself',query:{uid:this.item.uid}});
       },
@@ -103,8 +120,8 @@ export default {
     created() {
       this.imgSrc=this.item.psrc
       this.isImg()
+      this.filter_time(this.item.upTime)
     }
- 
 
 }
 </script>

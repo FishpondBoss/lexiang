@@ -26,9 +26,9 @@
           <div class="mytext">{{item.pdesc}}</div>
           <div class="other">
               <img :src="axios.defaults.baseURL+item.psrc" alt="" class="img1">
-              <div class="bg_1" v-show="item.psrc==''? false : true">
+              <!-- <div class="bg_1" v-show="item.psrc==''? false : true">
                   <img src="../../../../public/imgs/tianjia.png" alt="" >
-              </div>
+              </div> -->
           </div>
           <div class="bottom1">          
                   <img src="../../../../public/imgs/icon/2.jpg" alt="">          
@@ -105,6 +105,9 @@ export default {
                                 item.psrc=str.split("|")[0];
                                 console.log(str.split("|"))
                                 console.log(item.psrc)
+                            }
+                            if(/\.mp4$/.test(item.psrc)){
+                                item.psrc=""
                             }
                 }
                 for(var i=this.list1.length-1;i>=0;i--){

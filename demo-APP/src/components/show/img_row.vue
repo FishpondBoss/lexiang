@@ -155,7 +155,7 @@ export default {
       .then(res=>{
         var result=res.data.code;
         if(result==200){
-          this.zan="../../../public/show/v_dzan.png";
+          this.zan=DzanImg;
         }
       }).catch(err=>{
         console.log("首次加载赞出错")

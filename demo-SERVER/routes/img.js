@@ -206,6 +206,32 @@ router.get("/follow",(req,res)=>{
 })  
 })
 
+//获取我关注的人
+router.get("/myfollow",(req,res)=>{
+  var uid=req.session.uid;
+  if(!uid){
+    res.send({code:-2,msg:"未登录"})
+ }else{
+   var sql='SELECT b.uid,b.nickname,b.uimg,b.selfdom FROM user_like a,show_user b WHERE a.uid = b.uid and a.like_uid=?'
+   pool.query(sql,[uid],(err,result)=>{
+     if(err){throw err}
+     if(result.length==0){
+       var data=[];
+       res.send({
+         code:1,
+         msg:"success",
+         rows:data
+       })
+     }else if(result.length>0){
+      res.send({
+        code:1,
+        msg:"success",
+        rows:result
+      })
+     }
+   })
+ }
+})
 
 //加载关注的动态
 router.get("/focus",(req,res)=>{

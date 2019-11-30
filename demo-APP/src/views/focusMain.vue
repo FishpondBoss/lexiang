@@ -1,5 +1,5 @@
 <template>
-  <div class="img">
+  <div class="img img_mt">
     <div class="focus_top">
       你的关注
     </div>
@@ -80,6 +80,9 @@ export default {
 }
 </script>
 <style scoped>
+.img_mt{
+  margin-bottom: 60px;
+}
 .focus_top{
   color:#4eb5f1;
   padding:15px 15px 15px 15px; 

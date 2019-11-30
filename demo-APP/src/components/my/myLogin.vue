@@ -102,6 +102,12 @@ export default {
                     nickname:res.data.row[0].nickname
                     }
                 })
+                var Info={
+                    uid:res.data.row[0].uid,
+                    uimg:res.data.row[0].uimg,
+                    nickname:res.data.row[0].nickname
+                }
+                window.sessionStorage.setItem("myInfo",JSON.stringify(Info))
                 console.log("this.userInfo")
                 console.log(this.userInfo)
                 ////////////////////////////////////////////////// yj E
